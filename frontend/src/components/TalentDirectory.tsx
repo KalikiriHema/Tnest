@@ -207,7 +207,7 @@ export const TalentDirectory: React.FC<TalentDirectoryProps> = ({ onNavigate, on
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 600 }}>
                       Featured Asset:
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(0,0,0,0.3)', padding: '8px', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'var(--bg-primary)', padding: '8px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
                       <img 
                         src={pro.portfolio[0].thumbnailUrl || 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200&auto=format&fit=crop&q=80'} 
                         alt="Portfolio" 
@@ -234,7 +234,7 @@ export const TalentDirectory: React.FC<TalentDirectoryProps> = ({ onNavigate, on
                   onClick={() => onNavigate('profile', { slug: pro.slug })}
                   className="btn btn-primary btn-sm"
                 >
-                  View Profile & Hire <ChevronRight size={14} />
+                  View Profile <ChevronRight size={14} />
                 </button>
               </div>
 

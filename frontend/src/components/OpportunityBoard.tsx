@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { api } from '../api';
 import { Requirement, Category } from '../types';
 import { useAuth } from '../context/AuthContext';
-import { Briefcase, Clock, DollarSign, Globe, Send, Package, Video, Sparkles, Filter, CheckCircle2 } from 'lucide-react';
+import { Briefcase, Clock, DollarSign, Globe, Send, Package, Video, Sparkles, Filter, CheckCircle2, Calendar } from 'lucide-react';
+import { formatRelativeTime } from '../utils/timeAgo';
 
 interface OpportunityBoardProps {
   onNavigate: (view: string, params?: any) => void;
@@ -23,6 +24,14 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ onNavigate, 
   const [proposedPrice, setProposedPrice] = useState<number>(15000);
   const [estimatedDays, setEstimatedDays] = useState<number>(3);
   const [submitting, setSubmitting] = useState(false);
+  const [appliedReqIds, setAppliedReqIds] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem('tnest_applied_opps');
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    } catch {
+      return new Set();
+    }
+  });
 
   useEffect(() => {
     Promise.all([
@@ -65,16 +74,24 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ onNavigate, 
     e.preventDefault();
     if (!pitchingReq) return;
     setSubmitting(true);
+    const reqId = pitchingReq.id;
     try {
       const proProfileId = user?.professionalProfileId || '00000000-0000-0000-0000-000000000000';
       await api.submitProposal({
-        requirementId: pitchingReq.id,
+        requirementId: reqId,
         professionalProfileId: proProfileId,
         coverLetter,
         proposedPrice,
         estimatedDays
       });
-      alert('🚀 Pitch proposal submitted successfully! The client has been notified.');
+      setAppliedReqIds((prev) => {
+        const next = new Set(prev);
+        next.add(reqId);
+        try {
+          localStorage.setItem('tnest_applied_opps', JSON.stringify(Array.from(next)));
+        } catch {}
+        return next;
+      });
       setPitchingReq(null);
       // Reload
       handleFilter();
@@ -160,9 +177,25 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ onNavigate, 
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '16px' }}>
                   <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
+                      {appliedReqIds.has(opp.id) && (
+                        <span className="badge badge-emerald" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(16,185,129,0.2)', color: '#34d399', border: '1px solid rgba(52,211,153,0.35)', fontWeight: 700 }}>
+                          <CheckCircle2 size={11} /> Applied
+                        </span>
+                      )}
                       <span className="badge badge-indigo">{opp.categoryName}</span>
-                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Posted by {opp.clientCompany}</span>
+                      <span 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onNavigate('client-profile', { clientId: opp.clientProfileId || opp.clientCompany });
+                        }}
+                        style={{ fontSize: '0.8rem', color: 'var(--brand-primary)', cursor: 'pointer', fontWeight: 600 }}
+                      >
+                        Posted by {opp.clientCompany}
+                      </span>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--accent-cyan)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        • <Calendar size={12} /> {formatRelativeTime(opp.createdAtUtc)}
+                      </span>
                       {opp.requiresOnCamera && <span className="badge badge-rose">On-Camera</span>}
                       {opp.requiresProductShipment && <span className="badge badge-amber">Shipment Required</span>}
                     </div>
@@ -170,7 +203,7 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ onNavigate, 
                   </div>
 
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff' }}>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                       ₹{opp.budgetMin?.toLocaleString()} - ₹{opp.budgetMax?.toLocaleString()}
                     </div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -185,7 +218,7 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ onNavigate, 
 
                 {/* Structured Dynamic Specs Pills */}
                 {Object.keys(dynamicAttrs).length > 0 && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', padding: '12px 16px', background: 'rgba(0,0,0,0.25)', borderRadius: '10px', marginBottom: '20px' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', padding: '12px 16px', background: 'var(--bg-primary)', borderRadius: '10px', marginBottom: '20px', border: '1px solid var(--border-subtle)' }}>
                     {Object.entries(dynamicAttrs).map(([key, val]) => (
                       <span key={key} style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
                         <strong style={{ color: 'var(--text-primary)', textTransform: 'capitalize' }}>{key.replace(/_/g, ' ')}:</strong> {typeof val === 'boolean' ? (val ? 'Yes' : 'No') : String(val)}
@@ -205,13 +238,33 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ onNavigate, 
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                     {opp.proposalsCount || 0} Proposals submitted so far
                   </div>
-                  <button
-                    onClick={() => handleOpenPitch(opp)}
-                    className="btn btn-primary btn-sm"
-                    style={{ padding: '8px 18px' }}
-                  >
-                    <Send size={14} /> Submit Pitch / Proposal
-                  </button>
+                  {appliedReqIds.has(opp.id) ? (
+                    <button
+                      disabled
+                      className="btn btn-sm"
+                      style={{
+                        background: 'rgba(16,185,129,0.15)',
+                        color: '#34d399',
+                        border: '1px solid rgba(52,211,153,0.35)',
+                        cursor: 'default',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        fontWeight: 700,
+                        padding: '8px 18px'
+                      }}
+                    >
+                      <CheckCircle2 size={14} /> Applied
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleOpenPitch(opp)}
+                      className="btn btn-primary btn-sm"
+                      style={{ padding: '8px 18px' }}
+                    >
+                      <Send size={14} /> Apply Now
+                    </button>
+                  )}
                 </div>
 
               </div>
@@ -277,7 +330,7 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ onNavigate, 
                   Cancel
                 </button>
                 <button type="submit" disabled={submitting} className="btn btn-primary">
-                  {submitting ? 'Submitting...' : 'Submit Pitch & Open Chat'} <Send size={16} />
+                  {submitting ? 'Submitting...' : 'Submit Pitch'} <Send size={16} />
                 </button>
               </div>
             </form>
