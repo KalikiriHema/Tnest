@@ -444,28 +444,6 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({ onNavigate }) 
               </button>
             </div>
 
-            {/* 2. Primary Action: Post a Task */}
-            <div>
-              <button
-                type="button"
-                onClick={() => onNavigate('wizard')}
-                className="btn btn-primary"
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '10px 12px',
-                  fontWeight: 700,
-                  fontSize: '0.88rem'
-                }}
-              >
-                <Plus size={16} strokeWidth={2.5} />
-                <span>Post a Task</span>
-              </button>
-            </div>
-
             {/* 3. DISCOVER */}
             <div>
               <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '8px', paddingLeft: '8px' }}>

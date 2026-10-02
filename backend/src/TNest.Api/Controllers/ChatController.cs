@@ -133,7 +133,7 @@ public class ChatController : ControllerBase
             {
                 id = c.Id,
                 clientProfileId = c.ClientProfileId,
-                clientName = c.ClientProfile?.ContactName ?? c.ClientProfile?.CompanyName ?? c.ClientProfile?.User?.FullName ?? "Client",
+                clientName = !string.IsNullOrWhiteSpace(c.ClientProfile?.CompanyName) ? c.ClientProfile.CompanyName : (c.ClientProfile?.ContactName ?? c.ClientProfile?.User?.FullName ?? "Client"),
                 clientAvatar = c.ClientProfile?.AvatarUrl,
                 professionalProfileId = c.ProfessionalProfileId,
                 professionalName = c.ProfessionalProfile?.DisplayName ?? c.ProfessionalProfile?.User?.FullName ?? "Doer",
@@ -232,7 +232,7 @@ public class ChatController : ControllerBase
             {
                 id = conversation.Id,
                 clientProfileId = conversation.ClientProfileId,
-                clientName = conversation.ClientProfile?.ContactName ?? conversation.ClientProfile?.CompanyName ?? "Client",
+                clientName = !string.IsNullOrWhiteSpace(conversation.ClientProfile?.CompanyName) ? conversation.ClientProfile.CompanyName : (conversation.ClientProfile?.ContactName ?? "Client"),
                 clientAvatar = conversation.ClientProfile?.AvatarUrl,
                 professionalProfileId = conversation.ProfessionalProfileId,
                 professionalName = conversation.ProfessionalProfile?.DisplayName ?? "Doer",
@@ -432,7 +432,7 @@ public class ChatController : ControllerBase
             {
                 id = existingConv.Id,
                 clientProfileId = existingConv.ClientProfileId,
-                clientName = existingConv.ClientProfile?.ContactName ?? existingConv.ClientProfile?.CompanyName ?? req.RecipientName ?? "Client",
+                clientName = !string.IsNullOrWhiteSpace(existingConv.ClientProfile?.CompanyName) ? existingConv.ClientProfile.CompanyName : (existingConv.ClientProfile?.ContactName ?? req.RecipientName ?? "Client"),
                 clientAvatar = existingConv.ClientProfile?.AvatarUrl,
                 professionalProfileId = existingConv.ProfessionalProfileId,
                 professionalName = existingConv.ProfessionalProfile?.DisplayName ?? req.RecipientName ?? "Doer",
@@ -486,7 +486,7 @@ public class ChatController : ControllerBase
         {
             id = loadedConv.Id,
             clientProfileId = loadedConv.ClientProfileId,
-            clientName = loadedConv.ClientProfile?.ContactName ?? loadedConv.ClientProfile?.CompanyName ?? req.RecipientName ?? "Client",
+            clientName = !string.IsNullOrWhiteSpace(loadedConv.ClientProfile?.CompanyName) ? loadedConv.ClientProfile.CompanyName : (loadedConv.ClientProfile?.ContactName ?? req.RecipientName ?? "Client"),
             clientAvatar = loadedConv.ClientProfile?.AvatarUrl,
             professionalProfileId = loadedConv.ProfessionalProfileId,
             professionalName = loadedConv.ProfessionalProfile?.DisplayName ?? req.RecipientName ?? "Doer",

@@ -254,7 +254,24 @@ export const api = {
 
     const res = await fetch(`${API_BASE}/requirements/opportunities?${params.toString()}`);
     if (!res.ok) throw new Error('Failed to fetch opportunities');
-    return res.json();
+    const data = await res.json();
+    return (data || []).map((item: any) => {
+      let dynamicAttrs: any = {};
+      try {
+        if (item.dynamicAttributesJson) {
+          dynamicAttrs = JSON.parse(item.dynamicAttributesJson);
+        }
+      } catch {}
+      return {
+        ...item,
+        opportunityType: item.opportunityType || dynamicAttrs.opportunityType || 'Freelance',
+        locationType: item.locationType || dynamicAttrs.locationType || (item.requiresProductShipment ? 'On-site / Hybrid' : 'Remote'),
+        vacanciesCount: item.vacanciesCount || dynamicAttrs.vacanciesCount || 1,
+        rolesNeeded: item.rolesNeeded || (dynamicAttrs.selectedRole ? [dynamicAttrs.selectedRole] : [item.categoryName || 'Specialist']),
+        requiredSkills: item.requiredSkills || dynamicAttrs.selectedSkills || ['Content Creation', 'Digital Specialist'],
+        deliverables: item.deliverables || dynamicAttrs.deliverables || ['Final Project Deliverable Files', 'Source Assets & Documentation']
+      };
+    });
   },
 
   getClientRequirements: async (clientProfileId: string): Promise<Requirement[]> => {

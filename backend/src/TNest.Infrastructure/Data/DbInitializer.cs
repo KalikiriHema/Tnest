@@ -120,7 +120,92 @@ public static class DbInitializer
                 if (!string.IsNullOrEmpty(cat.DynamicSchemaJson)) existing.DynamicSchemaJson = cat.DynamicSchemaJson;
             }
         }
-        await context.SaveChangesAsync();
+        // Guaranteed accounts: Hema's Brand (hema@gmail.com / hema1234) and Navya (navya@gmail.com / navya1234)
+        var hemaAccount = await context.Users.Include(u => u.ClientProfile).FirstOrDefaultAsync(u => u.Email == "hema@gmail.com" || u.Email == "hema@brand.com");
+        if (hemaAccount == null)
+        {
+            var newHema = new User
+            {
+                Id = Guid.NewGuid(),
+                FullName = "hema",
+                Email = "hema@gmail.com",
+                PhoneNumber = "+91 98765 11223",
+                PasswordHash = hasher.HashPassword("hema1234"),
+                Role = UserRole.Client,
+                IsEmailVerified = true,
+                IsPhoneVerified = true
+            };
+            newHema.ClientProfile = new ClientProfile
+            {
+                Id = Guid.NewGuid(),
+                UserId = newHema.Id,
+                CompanyName = "hema's Brand",
+                ContactName = "hema",
+                AvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+                Industry = "E-Commerce & Digital Media",
+                ClientType = "Startup",
+                City = "Hyderabad",
+                State = "Telangana",
+                Bio = "Direct-to-consumer brand creating aesthetic video campaigns and creator collaborations.",
+                BusinessDescription = "Premium brand connecting with high-converting creative specialists."
+            };
+            context.Users.Add(newHema);
+            await context.SaveChangesAsync();
+        }
+        else
+        {
+            hemaAccount.Email = "hema@gmail.com";
+            hemaAccount.PasswordHash = hasher.HashPassword("hema1234");
+            await context.SaveChangesAsync();
+        }
+
+        var navyaAccount = await context.Users.Include(u => u.ProfessionalProfile).FirstOrDefaultAsync(u => u.Email == "navya@gmail.com" || u.Email == "navya@tnest.com");
+        if (navyaAccount == null)
+        {
+            var newNavya = new User
+            {
+                Id = Guid.NewGuid(),
+                FullName = "navya",
+                Email = "navya@gmail.com",
+                PhoneNumber = "+91 98765 33445",
+                PasswordHash = hasher.HashPassword("navya1234"),
+                Role = UserRole.Professional,
+                IsEmailVerified = true,
+                IsPhoneVerified = true
+            };
+            newNavya.ProfessionalProfile = new ProfessionalProfile
+            {
+                Id = Guid.NewGuid(),
+                UserId = newNavya.Id,
+                DisplayName = "navya",
+                Slug = "navya",
+                Headline = "UGC Video Creator & Video Editor • Short-form Specialist",
+                Bio = "Creative specialist delivering high-impact short-form video edits, authentic UGC reels, and digital designs.",
+                AvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+                ExperienceLevel = "Experienced",
+                YearsOfExperience = 3,
+                AvailabilityStatus = AvailabilityStatus.AvailableNow,
+                HourlyRate = 2200,
+                Currency = "INR",
+                TurnaroundDays = 2,
+                Languages = new List<string> { "Telugu", "English", "Hindi" },
+                AppearsOnCamera = true,
+                AcceptsProductShipments = true,
+                AverageRating = 4.9m,
+                CompletedProjectsCount = 26,
+                IsVerified = true,
+                City = "Hyderabad",
+                State = "Telangana"
+            };
+            context.Users.Add(newNavya);
+            await context.SaveChangesAsync();
+        }
+        else
+        {
+            navyaAccount.Email = "navya@gmail.com";
+            navyaAccount.PasswordHash = hasher.HashPassword("navya1234");
+            await context.SaveChangesAsync();
+        }
 
         // 2. Clean up dynamic user data if database was empty or needs initial seeding
         if (await context.ProfessionalProfiles.CountAsync() < 100 || await context.Requirements.CountAsync() < 75)
@@ -346,6 +431,72 @@ public static class DbInitializer
                 State = "Telangana"
             };
             context.Users.Add(priyaUser);
+
+            // D1. Hema's Brand (Client Account)
+            var hemaUser = new User
+            {
+                Id = Guid.NewGuid(),
+                FullName = "hema",
+                Email = "hema@brand.com",
+                PhoneNumber = "+91 98765 11223",
+                PasswordHash = defaultPassword,
+                Role = UserRole.Client,
+                IsEmailVerified = true,
+                IsPhoneVerified = true
+            };
+            hemaUser.ClientProfile = new ClientProfile
+            {
+                Id = Guid.NewGuid(),
+                UserId = hemaUser.Id,
+                CompanyName = "hema's Brand",
+                ContactName = "hema",
+                AvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+                Industry = "E-Commerce & Digital Media",
+                ClientType = "Startup",
+                City = "Hyderabad",
+                State = "Telangana",
+                Bio = "Direct-to-consumer brand creating aesthetic video campaigns and creator collaborations.",
+                BusinessDescription = "Premium brand connecting with high-converting creative specialists."
+            };
+            context.Users.Add(hemaUser);
+
+            // D2. Navya (Doer Account)
+            var navyaUser = new User
+            {
+                Id = Guid.NewGuid(),
+                FullName = "navya",
+                Email = "navya@tnest.com",
+                PhoneNumber = "+91 98765 33445",
+                PasswordHash = defaultPassword,
+                Role = UserRole.Professional,
+                IsEmailVerified = true,
+                IsPhoneVerified = true
+            };
+            navyaUser.ProfessionalProfile = new ProfessionalProfile
+            {
+                Id = Guid.NewGuid(),
+                UserId = navyaUser.Id,
+                DisplayName = "navya",
+                Slug = "navya",
+                Headline = "UGC Video Creator & Video Editor • Short-form Specialist",
+                Bio = "Creative specialist delivering high-impact short-form video edits, authentic UGC reels, and digital designs.",
+                AvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+                ExperienceLevel = "Experienced",
+                YearsOfExperience = 3,
+                AvailabilityStatus = AvailabilityStatus.AvailableNow,
+                HourlyRate = 2200,
+                Currency = "INR",
+                TurnaroundDays = 2,
+                Languages = new List<string> { "Telugu", "English", "Hindi" },
+                AppearsOnCamera = true,
+                AcceptsProductShipments = true,
+                AverageRating = 4.9m,
+                CompletedProjectsCount = 26,
+                IsVerified = true,
+                City = "Hyderabad",
+                State = "Telangana"
+            };
+            context.Users.Add(navyaUser);
 
             // E. Doer Developer Account: Video Editor (Arjun Verma)
             var arjunUser = new User
@@ -687,6 +838,9 @@ public static class DbInitializer
                     createdAt = DateTime.UtcNow.AddDays(-rnd.Next(15, 30));
                 }
 
+                var oppTypes = new[] { "Job", "Task", "Freelance", "Internship" };
+                var assignedOppType = oppTypes[(t - 1) % oppTypes.Length];
+
                 var req = new Requirement
                 {
                     Id = Guid.NewGuid(),
@@ -703,7 +857,7 @@ public static class DbInitializer
                     RequiresProductShipment = catSlug == "ugc-creators" || catSlug == "photography",
                     DynamicAttributesJson = JsonSerializer.Serialize(new
                     {
-                        opportunityType = "Task",
+                        opportunityType = assignedOppType,
                         clientCompany = client.CompanyName,
                         selectedRole = item.Title.Split('(')[0].Trim(),
                         deliverables = new[] { "Complete deliverables repository / drive link", "Revision review meeting", "Final source files" },

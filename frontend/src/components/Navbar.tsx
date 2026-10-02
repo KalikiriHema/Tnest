@@ -135,28 +135,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
             content: notif.content || 'Sent you a message',
             conversationId: notif.conversationId
           });
-
-          // Add directly to persistent notification center
-          const storageKey = `tnest_notifs_${user.id || user.email}`;
-          const newNotifItem: AppNotification = {
-            id: `msg-${notif.id || Date.now()}`,
-            type: 'message',
-            title: `💬 ${notif.senderName || 'Contact'}`,
-            message: notif.content?.length > 80 ? notif.content.substring(0, 77) + '...' : (notif.content || 'Sent a new message'),
-            time: 'Just now',
-            isRead: false,
-            actionView: 'messages',
-            actionParams: { conversationId: notif.conversationId }
-          };
-
-          setNotifications(prev => {
-            if (prev.some(n => n.id === newNotifItem.id)) return prev;
-            const nextList = [newNotifItem, ...prev];
-            try {
-              localStorage.setItem(storageKey, JSON.stringify(nextList));
-            } catch {}
-            return nextList;
-          });
         }
       });
 
@@ -258,9 +236,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
           parsed[profileIndex] = { ...completeProfileNotif, isRead: parsed[profileIndex].isRead };
         }
 
-        // Filter out any obsolete legacy notifications
+        // Filter out any obsolete legacy notifications or chat messages (messages are kept in chats only)
         const filtered = parsed.filter((n: AppNotification) => 
-          !n.title?.includes('Escrow Protection Active') && n.id !== 'n-escrow'
+          n.type !== 'message' && !n.title?.includes('Escrow Protection Active') && n.id !== 'n-escrow'
         );
         setNotifications(filtered);
         localStorage.setItem(storageKey, JSON.stringify(filtered));
@@ -974,7 +952,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                         </div>
                         <span className={`badge ${
                           user?.role === 'Admin' ? 'badge-rose' :
-                          user?.role === 'Professional' ? 'badge-emerald' :
+                          user?.role === 'Professional' ? 'badge-primary' :
                           user?.role === 'DualRole' ? 'badge-amber' :
                           'badge-primary'
                         }`} style={{ fontSize: '0.66rem', textTransform: 'capitalize' }}>
@@ -1009,7 +987,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                               fontSize: '0.78rem',
                               fontWeight: isDoer ? 700 : 500,
                               backgroundColor: isDoer ? 'var(--bg-card)' : 'transparent',
-                              color: isDoer ? '#10B981' : 'var(--text-secondary)',
+                              color: isDoer ? 'var(--accent-primary)' : 'var(--text-secondary)',
                               border: 'none',
                               borderRadius: 'var(--radius-xs)',
                               cursor: 'pointer',
@@ -1021,7 +999,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                               transition: 'all 0.15s ease'
                             }}
                           >
-                            <Briefcase size={12} color={isDoer ? '#10B981' : 'var(--text-muted)'} />
+                            <Briefcase size={12} color={isDoer ? 'var(--accent-primary)' : 'var(--text-muted)'} />
                             <span>Doer Mode</span>
                           </button>
 
@@ -1141,7 +1119,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-card-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                           >
-                            <Briefcase size={15} color="#10B981" />
+                            <Briefcase size={15} color="var(--accent-primary)" />
                             <span style={{ fontWeight: 600 }}>My Dashboard</span>
                           </button>
 
@@ -1224,7 +1202,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-card-hover)'}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                           >
-                            <Briefcase size={15} color="#10B981" />
+                            <Briefcase size={15} color="var(--accent-primary)" />
                             <span>Doer Dashboard</span>
                           </button>
 
@@ -1459,7 +1437,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                         fontSize: '0.78rem',
                         fontWeight: isDoer ? 700 : 500,
                         backgroundColor: isDoer ? 'var(--bg-card)' : 'transparent',
-                        color: isDoer ? '#10B981' : 'var(--text-secondary)',
+                        color: isDoer ? 'var(--accent-primary)' : 'var(--text-secondary)',
                         border: 'none',
                         borderRadius: 'var(--radius-xs)',
                         cursor: 'pointer',
@@ -1469,7 +1447,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                         gap: '4px'
                       }}
                     >
-                      <Briefcase size={12} color={isDoer ? '#10B981' : 'var(--text-muted)'} />
+                      <Briefcase size={12} color={isDoer ? 'var(--accent-primary)' : 'var(--text-muted)'} />
                       <span>Doer</span>
                     </button>
 

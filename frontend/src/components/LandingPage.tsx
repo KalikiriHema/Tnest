@@ -214,8 +214,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                   position: 'relative'
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
-                  <div style={{ maxWidth: '620px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                  <div style={{ maxWidth: '720px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
                       <span className="badge badge-primary" style={{ padding: '3px 10px', fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
                         Welcome, {user?.companyName || user?.fullName || 'Client'}
@@ -241,13 +241,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                       color: 'var(--text-secondary)',
                       lineHeight: 1.55,
                       margin: 0,
-                      maxWidth: '580px'
+                      maxWidth: '640px'
                     }}>
                       Post scoped task briefs, match with verified Doers, and track deliverables with milestone-secured payments.
                     </p>
                   </div>
 
-                  {/* Primary Action Button Suite */}
+                  {/* Primary Action Button Suite at the end of card */}
                   <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
                     <button 
                       onClick={() => onNavigate('wizard')} 
@@ -272,144 +272,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                       <Users size={16} />
                       <span>Find Doers</span>
                     </button>
-                    <button 
-                      onClick={() => onNavigate('client-dashboard')} 
-                      className="btn btn-ghost"
-                      style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '6px', 
-                        fontWeight: 600, 
-                        color: 'var(--accent-primary)',
-                        padding: '10px 14px' 
-                      }}
-                    >
-                      <FolderKanban size={16} />
-                      <span>Full Dashboard →</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* 4 Interactive Quick Stats Cards */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
-                  gap: '12px',
-                  marginTop: '24px',
-                  paddingTop: '18px',
-                  borderTop: '1px solid var(--border-subtle)'
-                }}>
-                  <div 
-                    onClick={() => onNavigate('client-dashboard')}
-                    style={{
-                      backgroundColor: 'var(--bg-card)',
-                      border: '1px solid var(--border-subtle)',
-                      borderRadius: 'var(--radius-md)',
-                      padding: '14px 16px',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--accent-primary)';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--border-subtle)';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                  >
-                    <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-sm)', backgroundColor: 'var(--accent-subtle)', color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Briefcase size={18} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--text-muted)' }}>My Briefs</div>
-                      <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.2 }}>{clientBriefsCount} Active</div>
-                    </div>
-                  </div>
-
-                  <div 
-                    onClick={() => onNavigate('client-dashboard')}
-                    style={{
-                      backgroundColor: 'var(--bg-card)',
-                      border: '1px solid var(--border-subtle)',
-                      borderRadius: 'var(--radius-md)',
-                      padding: '14px 16px',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--accent-primary)';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--border-subtle)';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                  >
-                    <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(99, 102, 241, 0.12)', color: '#6366F1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Users size={18} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--text-muted)' }}>Proposals</div>
-                      <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.2 }}>{clientProposalsCount} Received</div>
-                    </div>
-                  </div>
-
-                  <div 
-                    onClick={() => onNavigate('client-dashboard')}
-                    style={{
-                      backgroundColor: 'var(--bg-card)',
-                      border: '1px solid var(--border-subtle)',
-                      borderRadius: 'var(--radius-md)',
-                      padding: '14px 16px',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--accent-primary)';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--border-subtle)';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                  >
-                    <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(16, 185, 129, 0.12)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <FolderKanban size={18} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--text-muted)' }}>Active Work</div>
-                      <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.2 }}>{clientActiveProjectsCount} Ongoing</div>
-                    </div>
-                  </div>
-
-                  <div 
-                    style={{
-                      backgroundColor: 'var(--bg-card)',
-                      border: '1px solid var(--border-subtle)',
-                      borderRadius: 'var(--radius-md)',
-                      padding: '14px 16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px'
-                    }}
-                  >
-                    <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(245, 158, 11, 0.12)', color: '#F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <ShieldCheck size={18} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--text-muted)' }}>Payment Safety</div>
-                      <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#10B981', lineHeight: 1.2 }}>100% Protected</div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -506,18 +368,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                 className="card"
                 style={{
                   padding: '30px 34px',
-                  background: 'linear-gradient(135deg, var(--bg-card) 0%, rgba(16, 185, 129, 0.04) 50%, var(--bg-secondary) 100%)',
-                  border: '1px solid rgba(16, 185, 129, 0.22)',
+                  background: 'linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 113, 227, 0.04) 50%, var(--bg-secondary) 100%)',
+                  border: '1px solid rgba(0, 113, 227, 0.22)',
                   borderRadius: 'var(--radius-lg)',
-                  boxShadow: '0 12px 32px rgba(16, 185, 129, 0.07)',
+                  boxShadow: '0 12px 32px rgba(0, 113, 227, 0.07)',
                   textAlign: 'left',
                   position: 'relative'
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
-                  <div style={{ maxWidth: '620px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                  <div style={{ maxWidth: '720px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
-                      <span className="badge badge-emerald" style={{ padding: '3px 10px', fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
+                      <span className="badge badge-primary" style={{ padding: '3px 10px', fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
                         Welcome, {user?.fullName || 'Specialist'}
                       </span>
                       <span className="badge badge-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '3px 10px', fontSize: '0.74rem', fontWeight: 600 }}>
@@ -541,13 +403,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                       color: 'var(--text-secondary)',
                       lineHeight: 1.55,
                       margin: 0,
-                      maxWidth: '580px'
+                      maxWidth: '640px'
                     }}>
                       Discover high-paying client briefs matching your skillset, submit proposals, and earn with guaranteed milestone payouts.
                     </p>
                   </div>
 
-                  {/* Specialist Action Buttons */}
+                  {/* Specialist Action Buttons at the end of card */}
                   <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
                     <button 
                       onClick={() => onNavigate('opportunities')} 
@@ -557,30 +419,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                         alignItems: 'center', 
                         gap: '8px', 
                         fontWeight: 700,
-                        backgroundColor: '#10B981', 
-                        borderColor: '#10B981',
                         padding: '10px 20px',
-                        boxShadow: '0 4px 14px rgba(16, 185, 129, 0.28)'
+                        boxShadow: '0 4px 14px rgba(0, 113, 227, 0.28)'
                       }}
                     >
                       <Compass size={17} />
                       <span>Browse Opportunities</span>
-                    </button>
-                    <button 
-                      onClick={() => onNavigate('pro-dashboard')} 
-                      className="btn btn-secondary"
-                      style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, padding: '10px 18px' }}
-                    >
-                      <Briefcase size={16} />
-                      <span>My Dashboard</span>
-                    </button>
-                    <button 
-                      onClick={() => onNavigate('profile', { slug: user?.slug || 'my-profile' })} 
-                      className="btn btn-ghost"
-                      style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600, color: '#10B981', padding: '10px 14px' }}
-                    >
-                      <UserIcon size={16} />
-                      <span>View My Profile</span>
                     </button>
                   </div>
                 </div>
@@ -1631,7 +1475,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                 <button 
                   onClick={() => onNavigate('opportunities')}
                   className="btn btn-primary btn-lg"
-                  style={{ backgroundColor: '#10B981', borderColor: '#10B981' }}
                 >
                   Browse Opportunities
                 </button>

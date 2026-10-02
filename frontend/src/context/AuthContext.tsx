@@ -117,14 +117,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     let email = '';
     let pass = '';
     if (type === 'client') {
-      email = 'client@glowskin.com';
-      pass = 'ClientPass123!';
+      email = 'hema@gmail.com';
+      pass = 'hema1234';
     } else if (type === 'ugc_pro') {
-      email = 'priya.ugc@creator.com';
-      pass = 'CreatorPass123!';
+      email = 'navya@gmail.com';
+      pass = 'navya1234';
     } else if (type === 'editor_pro') {
-      email = 'arjun.edits@creator.com';
-      pass = 'EditorPass123!';
+      email = 'navya@gmail.com';
+      pass = 'navya1234';
     } else if (type === 'dual' || type === 'john') {
       email = 'john@gmail.com';
       pass = 'Password123!';

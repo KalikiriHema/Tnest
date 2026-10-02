@@ -689,8 +689,8 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                               width: '42px',
                               height: '42px',
                               borderRadius: '50%',
-                              backgroundColor: isClientView ? '#EBF5FF' : '#F0FDF4',
-                              color: isClientView ? '#0071E3' : '#10B981',
+                              backgroundColor: 'var(--bg-secondary)',
+                              color: 'var(--accent-primary)',
                               fontWeight: 700,
                               fontSize: '0.92rem',
                               display: 'flex',
@@ -731,8 +731,8 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                                 fontSize: '0.65rem',
                                 padding: '1px 5px',
                                 borderRadius: '4px',
-                                backgroundColor: isClientView ? 'rgba(0, 113, 227, 0.08)' : 'rgba(16, 185, 129, 0.08)',
-                                color: isClientView ? 'var(--accent-primary)' : 'var(--status-success)',
+                                backgroundColor: 'rgba(0, 113, 227, 0.08)',
+                                color: 'var(--accent-primary)',
                                 fontWeight: 600
                               }}>
                                 {otherRole}

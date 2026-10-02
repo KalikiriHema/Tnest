@@ -300,25 +300,43 @@ public class RequirementsController : ControllerBase
             list = list.Where(r => r.RequiredLanguages.Any(l => l.Equals(language, StringComparison.OrdinalIgnoreCase))).ToList();
         }
 
-        return Ok(list.Select(r => new
+        return Ok(list.Select(r => 
         {
-            id = r.Id,
-            clientProfileId = r.ClientProfileId,
-            clientCompany = r.ClientProfile.CompanyName ?? "Verified Brand",
-            categoryName = r.Category.Name,
-            categorySlug = r.Category.Slug,
-            title = r.Title,
-            description = r.Description,
-            budgetMin = r.BudgetMin,
-            budgetMax = r.BudgetMax,
-            currency = r.Currency,
-            expectedDeliveryDays = r.ExpectedDeliveryDays,
-            requiredLanguages = r.RequiredLanguages,
-            requiresOnCamera = r.RequiresOnCamera,
-            requiresProductShipment = r.RequiresProductShipment,
-            dynamicAttributesJson = r.DynamicAttributesJson,
-            proposalsCount = r.Proposals.Count,
-            createdAtUtc = r.CreatedAtUtc
+            string oppType = "Freelance";
+            if (!string.IsNullOrEmpty(r.DynamicAttributesJson))
+            {
+                try
+                {
+                    using var doc = System.Text.Json.JsonDocument.Parse(r.DynamicAttributesJson);
+                    if (doc.RootElement.TryGetProperty("opportunityType", out var prop))
+                    {
+                        oppType = prop.GetString() ?? "Freelance";
+                    }
+                }
+                catch { }
+            }
+
+            return new
+            {
+                id = r.Id,
+                clientProfileId = r.ClientProfileId,
+                clientCompany = r.ClientProfile.CompanyName ?? "Verified Brand",
+                categoryName = r.Category.Name,
+                categorySlug = r.Category.Slug,
+                opportunityType = oppType,
+                title = r.Title,
+                description = r.Description,
+                budgetMin = r.BudgetMin,
+                budgetMax = r.BudgetMax,
+                currency = r.Currency,
+                expectedDeliveryDays = r.ExpectedDeliveryDays,
+                requiredLanguages = r.RequiredLanguages,
+                requiresOnCamera = r.RequiresOnCamera,
+                requiresProductShipment = r.RequiresProductShipment,
+                dynamicAttributesJson = r.DynamicAttributesJson,
+                proposalsCount = r.Proposals.Count,
+                createdAtUtc = r.CreatedAtUtc
+            };
         }));
     }
 

@@ -203,6 +203,11 @@ export const ProDashboard: React.FC<ProDashboardProps> = ({ onNavigate }) => {
 
       return {
         ...opp,
+        opportunityType: opp.opportunityType || dynamicAttr.opportunityType || 'Freelance',
+        locationType: opp.locationType || dynamicAttr.locationType || 'Remote',
+        rolesNeeded: opp.rolesNeeded || (dynamicAttr.selectedRole ? [dynamicAttr.selectedRole] : [opp.categoryName || 'Specialist']),
+        requiredSkills: opp.requiredSkills || dynamicAttr.selectedSkills || ['Content Creation'],
+        deliverables: opp.deliverables || dynamicAttr.deliverables || ['Final deliverables'],
         matchPercentage,
         matchedSkillsCount: skillMatches
       };
@@ -390,8 +395,8 @@ export const ProDashboard: React.FC<ProDashboardProps> = ({ onNavigate }) => {
                 gap: '10px',
                 padding: '10px 12px',
                 borderRadius: 'var(--radius-sm)',
-                backgroundColor: activeSection === 'dashboard' ? 'var(--accent-subtle)' : 'transparent',
-                color: activeSection === 'dashboard' ? 'var(--accent-primary)' : 'var(--text-primary)',
+                backgroundColor: activeSection === 'dashboard' ? 'var(--accent-primary)' : 'transparent',
+                color: activeSection === 'dashboard' ? '#FFFFFF' : 'var(--text-primary)',
                 fontWeight: activeSection === 'dashboard' ? 700 : 500,
                 border: 'none',
                 cursor: 'pointer',
@@ -401,8 +406,8 @@ export const ProDashboard: React.FC<ProDashboardProps> = ({ onNavigate }) => {
                 marginBottom: '12px'
               }}
             >
-              <LayoutDashboard size={16} color={activeSection === 'dashboard' ? 'var(--accent-primary)' : 'var(--text-muted)'} />
-              <span>Doer Dashboard</span>
+              <LayoutDashboard size={16} color={activeSection === 'dashboard' ? '#FFFFFF' : 'var(--text-muted)'} />
+              <span>Dashboard</span>
             </button>
 
             {/* Group 1: DISCOVER */}
@@ -935,7 +940,7 @@ export const ProDashboard: React.FC<ProDashboardProps> = ({ onNavigate }) => {
 
                             {/* Skills Pills */}
                             <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', marginBottom: '12px' }}>
-                              {(opp.requiredSkills || ['Premiere Pro', 'CapCut']).slice(0, 3).map((skill, sIdx) => (
+                              {(opp.requiredSkills || ['Premiere Pro', 'CapCut']).slice(0, 3).map((skill: string, sIdx: number) => (
                                 <span key={sIdx} className="badge badge-neutral" style={{ fontSize: '0.68rem', padding: '2px 6px' }}>
                                   {skill}
                                 </span>
@@ -1209,10 +1214,11 @@ export const ProDashboard: React.FC<ProDashboardProps> = ({ onNavigate }) => {
                 {recommendedOpportunities
                   .filter(opp => {
                     if (oppTypeTab !== 'All') {
-                      if (oppTypeTab === 'Jobs' && opp.opportunityType !== 'Job') return false;
-                      if (oppTypeTab === 'Tasks' && opp.opportunityType !== 'Task') return false;
-                      if (oppTypeTab === 'Freelance' && opp.opportunityType !== 'Freelance') return false;
-                      if (oppTypeTab === 'Internships' && opp.opportunityType !== 'Internship') return false;
+                      const effectiveType = (opp.opportunityType || 'Freelance').toLowerCase();
+                      if (oppTypeTab === 'Jobs' && !effectiveType.includes('job')) return false;
+                      if (oppTypeTab === 'Tasks' && !effectiveType.includes('task')) return false;
+                      if (oppTypeTab === 'Freelance' && !effectiveType.includes('freelance')) return false;
+                      if (oppTypeTab === 'Internships' && !effectiveType.includes('internship')) return false;
                     }
                     if (searchQuery.trim()) {
                       const q = searchQuery.toLowerCase();
@@ -1265,7 +1271,7 @@ export const ProDashboard: React.FC<ProDashboardProps> = ({ onNavigate }) => {
                               {opp.categoryName || 'Creative'} • {opp.vacanciesCount || 3} Vacancies • {budget}
                             </div>
                             <div style={{ display: 'flex', gap: '4px', marginTop: '6px' }}>
-                              {(opp.requiredSkills || ['Premiere Pro', 'CapCut']).slice(0, 3).map((s, sIdx) => (
+                              {(opp.requiredSkills || ['Premiere Pro', 'CapCut']).slice(0, 3).map((s: string, sIdx: number) => (
                                 <span key={sIdx} className="badge badge-neutral" style={{ fontSize: '0.66rem' }}>{s}</span>
                               ))}
                             </div>

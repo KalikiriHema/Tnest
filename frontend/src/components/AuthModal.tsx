@@ -337,8 +337,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ initialTab = 'login', onCl
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span className="badge badge-primary" style={{ fontSize: '0.7rem', fontWeight: 600 }}>Client</span>
                     <div>
-                      <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-primary)' }}>GlowSkin Co. (Ananya Sharma)</div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>client@glowskin.com • Post & Hire</div>
+                      <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-primary)' }}>hema's Brand (hema)</div>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>hema@gmail.com • Client Account</div>
                     </div>
                   </div>
                   <button 
@@ -364,14 +364,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ initialTab = 'login', onCl
                     cursor: 'pointer',
                     transition: 'all 0.15s ease'
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--status-success)'}
+                  onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--accent-primary)'}
                   onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-subtle)'}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span className="badge badge-emerald" style={{ fontSize: '0.7rem', fontWeight: 600 }}>Doer</span>
+                    <span className="badge badge-primary" style={{ fontSize: '0.7rem', fontWeight: 600 }}>Doer</span>
                     <div>
-                      <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-primary)' }}>Priya Reddy (UGC Specialist)</div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>priya.ugc@creator.com • Top Doer</div>
+                      <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-primary)' }}>navya (Creative Specialist)</div>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>navya@gmail.com • Doer Account</div>
                     </div>
                   </div>
                   <button 
