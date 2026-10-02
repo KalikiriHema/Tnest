@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  FileText, 
-  Send, 
-  Users, 
-  CheckCircle2, 
-  MessageSquare, 
-  FolderKanban, 
-  Star, 
-  ArrowRight, 
+import {
+  FileText,
+  Send,
+  Users,
+  CheckCircle2,
+  MessageSquare,
+  FolderKanban,
+  Star,
+  ArrowRight,
   ShieldCheck,
   Plus
 } from 'lucide-react';
@@ -23,7 +23,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate, onOp
 
   return (
     <div className="container" style={{ padding: '32px 24px 80px', maxWidth: '1000px' }}>
-      
+
       {/* Top Breadcrumb */}
       <BreadcrumbNav
         items={[
@@ -47,19 +47,19 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate, onOp
 
         {/* Tab Switcher */}
         <div style={{ display: 'inline-flex', padding: '4px', borderRadius: 'var(--radius-sm)', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-medium)', marginTop: '24px', gap: '4px' }}>
-          <button 
+          <button
             onClick={() => setActiveTab('client')}
             className={`btn btn-sm ${activeTab === 'client' ? 'btn-primary' : 'btn-ghost'}`}
           >
             For Clients (Posting Tasks)
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('doer')}
             className={`btn btn-sm ${activeTab === 'doer' ? 'btn-primary' : 'btn-ghost'}`}
           >
             For Doers (Finding Work)
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('direct')}
             className={`btn btn-sm ${activeTab === 'direct' ? 'btn-primary' : 'btn-ghost'}`}
           >

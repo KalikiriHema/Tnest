@@ -731,7 +731,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                                 fontSize: '0.65rem',
                                 padding: '1px 5px',
                                 borderRadius: '4px',
-                                backgroundColor: 'rgba(0, 113, 227, 0.08)',
+                                backgroundColor: 'var(--accent-subtle)',
                                 color: 'var(--accent-primary)',
                                 fontWeight: 600
                               }}>
@@ -794,7 +794,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                             justifyContent: 'center',
                             flexShrink: 0,
                             marginTop: '2px',
-                            boxShadow: '0 2px 6px rgba(0, 113, 227, 0.35)'
+                            boxShadow: '0 2px 6px rgba(217, 119, 6, 0.35)'
                           }}>
                             {c.unreadCount}
                           </div>
@@ -874,7 +874,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 2px 8px rgba(0, 113, 227, 0.25)'
+                          boxShadow: '0 2px 8px rgba(217, 119, 6, 0.25)'
                         }}>
                           {activeInterlocutor.name.charAt(0).toUpperCase()}
                         </div>
@@ -910,7 +910,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                           fontSize: '0.68rem',
                           padding: '2px 7px',
                           borderRadius: '10px',
-                          backgroundColor: 'rgba(0, 113, 227, 0.08)',
+                          backgroundColor: 'var(--accent-subtle)',
                           color: 'var(--accent-primary)',
                           fontWeight: 600
                         }}>
@@ -1021,7 +1021,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                         width: '48px',
                         height: '48px',
                         borderRadius: '50%',
-                        backgroundColor: 'rgba(0, 113, 227, 0.1)',
+                        backgroundColor: 'var(--accent-subtle)',
                         color: 'var(--accent-primary)',
                         display: 'flex',
                         alignItems: 'center',
@@ -1064,12 +1064,12 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                               border: '1.5px solid var(--accent-primary)',
                               borderRadius: 'var(--radius-md)',
                               overflow: 'hidden',
-                              boxShadow: '0 4px 16px rgba(0, 113, 227, 0.12)',
+                              boxShadow: '0 4px 16px rgba(217, 119, 6, 0.15)',
                               margin: '4px 0'
                             }}>
                               <div style={{
                                 padding: '10px 16px',
-                                background: 'linear-gradient(135deg, #0071E3 0%, #0056B3 100%)',
+                                background: 'linear-gradient(135deg, #D97706 0%, #B45309 100%)',
                                 color: '#FFFFFF',
                                 display: 'flex',
                                 alignItems: 'center',
@@ -1178,7 +1178,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                                     color: isMine ? '#FFFFFF' : 'var(--text-primary)',
                                     border: isMine ? 'none' : '1px solid var(--border-subtle)',
                                     boxShadow: isMine 
-                                      ? '0 2px 8px rgba(0, 113, 227, 0.25)' 
+                                      ? '0 2px 8px rgba(217, 119, 6, 0.25)' 
                                       : '0 2px 6px rgba(0, 0, 0, 0.04)',
                                     fontSize: '0.88rem',
                                     lineHeight: 1.5,
@@ -1307,7 +1307,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                       alignItems: 'center', 
                       justifyContent: 'center',
                       flexShrink: 0,
-                      boxShadow: '0 4px 12px rgba(0, 113, 227, 0.3)'
+                      boxShadow: '0 4px 12px rgba(217, 119, 6, 0.28)'
                     }}
                     title="Send message (Enter)"
                   >

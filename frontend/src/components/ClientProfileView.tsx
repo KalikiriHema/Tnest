@@ -395,7 +395,7 @@ export const ClientProfileView: React.FC<ClientProfileViewProps> = ({ clientId, 
                           gap: '7px',
                           fontWeight: 700,
                           fontSize: '0.9rem',
-                          boxShadow: '0 4px 14px rgba(0, 113, 227, 0.3)'
+                          boxShadow: '0 4px 14px rgba(217, 119, 6, 0.28)'
                         }}
                       >
                         <MessageSquare size={16} /> Chat / Contact

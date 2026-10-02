@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <!-- Background Badge Gradient -->
+    <radialGradient id="badgeBg" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#FFFDF8" />
+      <stop offset="45%" stop-color="#FEF3C7" />
+      <stop offset="100%" stop-color="#FDE68A" />
+    </radialGradient>
+
+    <!-- Golden Coin Gradient -->
+    <linearGradient id="coinGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="40%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+
+    <!-- Coin Inner Gradient -->
+    <linearGradient id="coinInner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+
+    <!-- Nest Weave Outer Gradient -->
+    <linearGradient id="nestOuter" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706" />
+      <stop offset="50%" stop-color="#B45309" />
+      <stop offset="100%" stop-color="#78350F" />
+    </linearGradient>
+
+    <!-- Nest Weave Highlights -->
+    <linearGradient id="nestLight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+
+    <!-- Sprout Leaf Gradient -->
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ADE80" />
+      <stop offset="60%" stop-color="#16A34A" />
+      <stop offset="100%" stop-color="#166534" />
+    </linearGradient>
+
+    <!-- Shadow filter -->
+    <filter id="nestShadow" x="-10%" y="-10%" width="120%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.8" flood-color="#78350F" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Base Rounded Hex/Pill Icon Container -->
+  <rect x="2" y="2" width="44" height="44" rx="12" fill="url(#badgeBg)" stroke="#FDE68A" stroke-width="1.5" />
+
+  <!-- Soft Ambient Glow behind coin & nest -->
+  <circle cx="24" cy="23" r="14" fill="#FEF3C7" opacity="0.6" />
+
+  <!-- Rupee Coin (Centered inside the nest) -->
+  <g filter="url(#nestShadow)">
+    <circle cx="24" cy="19" r="10" fill="url(#coinGrad)" stroke="#FEF3C7" stroke-width="1.2" />
+    <circle cx="24" cy="19" r="8.2" fill="url(#coinInner)" opacity="0.85" />
+    
+    <!-- Stylized Rupee Symbol '₹' on the Coin -->
+    <!-- Top horizontal bar -->
+    <line x1="20" y1="14.5" x2="28" y2="14.5" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" />
+    <!-- Second horizontal bar -->
+    <line x1="20" y1="17.2" x2="26.5" y2="17.2" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" />
+    <!-- Rupee curve & stem -->
+    <path d="M21.8 14.5 V 19.5 C 21.8 20.8 23 21.6 24.8 21.6 L 27.2 24.8" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <!-- Green Sprout Emerging on the Right -->
+  <path d="M30 20 C 34 16 38 18 36 22 C 34 23.5 31 22.5 30 20 Z" fill="url(#leafGrad)" />
+  <path d="M30 20 C 31.5 17 34 16.5 34 16.5" stroke="#BBF7D0" stroke-width="0.7" stroke-linecap="round" />
+
+  <!-- Golden Woven Nest Layer (Lower & Outer Weaves) -->
+  <!-- Back / Lower Weave -->
+  <path d="M7 26 C 9 37 17 41 24 41 C 31 41 39 37 41 26 C 36 30 30 32 24 32 C 18 32 12 30 7 26 Z" fill="url(#nestOuter)" />
+  
+  <!-- Middle Weave Strands -->
+  <path d="M9 28 C 13 35 20 38 24 38 C 28 38 35 35 39 28" stroke="url(#nestLight)" stroke-width="2" stroke-linecap="round" />
+  <path d="M11 25.5 C 15 31 20 34 24 34 C 28 34 33 31 37 25.5" stroke="#FEF3C7" stroke-width="1.4" stroke-linecap="round" opacity="0.9" />
+  <path d="M8 30 C 13 37 20 40 24 40 C 28 40 35 37 40 30" stroke="#78350F" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+
+  <!-- Interlocking Twig / Weave Details -->
+  <path d="M13 29 L 19 36" stroke="#FEF3C7" stroke-width="1.2" stroke-linecap="round" opacity="0.75" />
+  <path d="M22 30 L 26 37" stroke="#FEF3C7" stroke-width="1.2" stroke-linecap="round" opacity="0.75" />
+  <path d="M31 30 L 27 36" stroke="#FEF3C7" stroke-width="1.2" stroke-linecap="round" opacity="0.75" />
+  <path d="M35 29 L 29 36" stroke="#FEF3C7" stroke-width="1.2" stroke-linecap="round" opacity="0.75" />
+
+  <!-- Talent Sparkle / Star (Top Left) -->
+  <path d="M12 11 L 13.2 14.5 L 16.7 15.7 L 13.2 16.9 L 12 20.4 L 10.8 16.9 L 7.3 15.7 L 10.8 14.5 Z" fill="#D97706" opacity="0.95" />
+  <circle cx="12" cy="15.7" r="1" fill="#FFFDF8" />
+</svg>

@@ -637,8 +637,8 @@ export const PublicProfile: React.FC<PublicProfileProps> = ({ slug, onNavigate, 
                             fontWeight: 600,
                             padding: '4px 10px',
                             borderRadius: 'var(--radius-xs)',
-                            backgroundColor: 'rgba(0, 113, 227, 0.08)',
-                            border: '1px solid rgba(0, 113, 227, 0.2)',
+                            backgroundColor: 'var(--accent-subtle)',
+                            border: '1px solid var(--accent-border)',
                             color: 'var(--accent-primary)'
                           }}
                         >

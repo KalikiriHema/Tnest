@@ -187,13 +187,31 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
   return (
     <div>
       
-      {/* 1. HERO SECTION: Executive Role-Tailored Workspace Hub or Clean Product Landing */}
+      {/* 1. HERO SECTION: Modern Clean Executive Hub / Product Landing */}
       <section style={{ 
-        padding: isAuthenticated ? '44px 0 40px' : '72px 0 56px', 
+        position: 'relative',
+        padding: isAuthenticated ? '44px 0 40px' : '72px 0 64px', 
         borderBottom: '1px solid var(--border-subtle)', 
-        background: 'var(--gradient-cool-header)' 
+        background: 'radial-gradient(120% 70% at 50% -10%, rgba(217, 119, 6, 0.08) 0%, rgba(250, 247, 242, 0) 65%), var(--bg-primary)',
+        overflow: 'hidden'
       }}>
-        <div className="container" style={{ maxWidth: '1040px' }}>
+        {/* Modern Ambient Radial Glow Highlights */}
+        <div 
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: '-120px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '800px',
+            height: '340px',
+            background: 'radial-gradient(circle, rgba(217, 119, 6, 0.12) 0%, rgba(217, 119, 6, 0.02) 60%, transparent 80%)',
+            filter: 'blur(50px)',
+            pointerEvents: 'none',
+            zIndex: 0
+          }}
+        />
+        <div className="container" style={{ maxWidth: '1060px', position: 'relative', zIndex: 1 }}>
           
           {/* ========================================================================= */}
           {/* CLIENT WORKSPACE EXECUTIVE COMMAND HUB */}
@@ -206,10 +224,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                 className="card"
                 style={{
                   padding: '30px 34px',
-                  background: 'linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 113, 227, 0.04) 50%, var(--bg-secondary) 100%)',
-                  border: '1px solid rgba(0, 113, 227, 0.22)',
+                  background: 'linear-gradient(135deg, var(--bg-card) 0%, rgba(217, 119, 6, 0.04) 50%, var(--bg-secondary) 100%)',
+                  border: '1px solid rgba(217, 119, 6, 0.22)',
                   borderRadius: 'var(--radius-lg)',
-                  boxShadow: '0 12px 32px rgba(0, 113, 227, 0.07)',
+                  boxShadow: '0 12px 32px rgba(217, 119, 6, 0.08)',
                   textAlign: 'left',
                   position: 'relative'
                 }}
@@ -221,7 +239,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                         Welcome, {user?.companyName || user?.fullName || 'Client'}
                       </span>
                       <span className="badge badge-emerald" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '3px 10px', fontSize: '0.74rem', fontWeight: 600 }}>
-                        <ShieldCheck size={13} /> 100% Escrow Milestone Protection Active
+                        <ShieldCheck size={13} /> 100% Safe Milestone Protection Active
                       </span>
                     </div>
 
@@ -258,7 +276,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                         gap: '8px', 
                         fontWeight: 700,
                         padding: '10px 20px',
-                        boxShadow: '0 4px 14px rgba(0, 113, 227, 0.28)'
+                        boxShadow: '0 4px 14px rgba(217, 119, 6, 0.28)'
                       }}
                     >
                       <Plus size={17} strokeWidth={2.5} />
@@ -368,10 +386,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                 className="card"
                 style={{
                   padding: '30px 34px',
-                  background: 'linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 113, 227, 0.04) 50%, var(--bg-secondary) 100%)',
-                  border: '1px solid rgba(0, 113, 227, 0.22)',
+                  background: 'linear-gradient(135deg, var(--bg-card) 0%, rgba(217, 119, 6, 0.04) 50%, var(--bg-secondary) 100%)',
+                  border: '1px solid rgba(217, 119, 6, 0.22)',
                   borderRadius: 'var(--radius-lg)',
-                  boxShadow: '0 12px 32px rgba(0, 113, 227, 0.07)',
+                  boxShadow: '0 12px 32px rgba(217, 119, 6, 0.08)',
                   textAlign: 'left',
                   position: 'relative'
                 }}
@@ -420,7 +438,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                         gap: '8px', 
                         fontWeight: 700,
                         padding: '10px 20px',
-                        boxShadow: '0 4px 14px rgba(0, 113, 227, 0.28)'
+                        boxShadow: '0 4px 14px rgba(217, 119, 6, 0.28)'
                       }}
                     >
                       <Compass size={17} />
@@ -469,184 +487,321 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
             </div>
           ) : (
             /* ========================================================================= */
-            /* PUBLIC VISITOR / GUEST HERO */
+            /* PUBLIC VISITOR / GUEST HERO: THEME 1 NATURAL WARM GLOW */
             /* ========================================================================= */
-            <div style={{ textAlign: 'center' }}>
-              {/* Subtle Category Pill */}
-              <div style={{ marginBottom: '16px' }}>
-                <span className="badge badge-primary" style={{ padding: '5px 14px', fontSize: '0.8rem', fontWeight: 600 }}>
-                  ✨ Direct Talent & Task Marketplace
-                </span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', position: 'relative' }}>
+              
+              {/* Decorative Corner Leaf Accents */}
+              <div 
+                aria-hidden="true" 
+                style={{ 
+                  position: 'absolute', 
+                  bottom: '-20px', 
+                  left: '-40px', 
+                  width: '120px', 
+                  height: '120px', 
+                  pointerEvents: 'none', 
+                  opacity: 0.85,
+                  zIndex: 0
+                }}
+              >
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+                  <path d="M10 90C20 60 50 40 85 35C80 65 60 85 10 90Z" fill="#5C7A58" opacity="0.8" />
+                  <path d="M10 90C35 80 55 60 65 30C45 40 25 65 10 90Z" fill="#759870" opacity="0.65" />
+                  <path d="M10 90Q50 60 85 35" stroke="#3E573B" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
               </div>
 
-              {/* Master Headline */}
-              <h1 style={{
-                fontSize: 'clamp(2.4rem, 4.2vw, 3.6rem)',
-                fontWeight: 700,
-                letterSpacing: '-0.03em',
-                lineHeight: 1.15,
-                color: 'var(--text-primary)',
-                marginBottom: '16px'
-              }}>
-                Where Needs Meet Skills.
-              </h1>
+              <div 
+                aria-hidden="true" 
+                style={{ 
+                  position: 'absolute', 
+                  bottom: '-20px', 
+                  right: '-40px', 
+                  width: '120px', 
+                  height: '120px', 
+                  pointerEvents: 'none', 
+                  opacity: 0.85,
+                  transform: 'scaleX(-1)',
+                  zIndex: 0
+                }}
+              >
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+                  <path d="M10 90C20 60 50 40 85 35C80 65 60 85 10 90Z" fill="#5C7A58" opacity="0.8" />
+                  <path d="M10 90C35 80 55 60 65 30C45 40 25 65 10 90Z" fill="#759870" opacity="0.65" />
+                  <path d="M10 90Q50 60 85 35" stroke="#3E573B" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </div>
 
-              {/* Subtitle */}
-              <p style={{
-                fontSize: '1.1rem',
-                color: 'var(--text-secondary)',
-                maxWidth: '640px',
-                margin: '0 auto 28px',
-                lineHeight: 1.55
-              }}>
-                Tnest connects clients with verified Doers across tasks, jobs, freelance work, and internships — with secure milestone protection.
-              </p>
+              {/* 2-Column Split Master Hero */}
+              <div 
+                style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: '1.05fr 0.95fr', 
+                  gap: '36px', 
+                  alignItems: 'center',
+                  textAlign: 'left',
+                  position: 'relative',
+                  zIndex: 1
+                }}
+              >
+                
+                {/* Left Column: Core Value Proposition & Search */}
+                <div>
+                  {/* Master Headline */}
+                  <h1 style={{
+                    fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
+                    fontWeight: 800,
+                    letterSpacing: '-0.03em',
+                    lineHeight: 1.12,
+                    color: '#1C1917',
+                    marginBottom: '12px'
+                  }}>
+                    Where Needs <br />Meet Skills
+                  </h1>
 
-              {/* Universal Search Bar */}
-              <div style={{ maxWidth: '640px', margin: '0 auto 24px' }}>
-                <form onSubmit={handleUniversalSearch}>
+                  {/* Subtitle in clear, simple English */}
+                  <p style={{
+                    fontSize: '1.08rem',
+                    color: '#44403C',
+                    maxWidth: '460px',
+                    margin: '0 0 24px',
+                    lineHeight: 1.5,
+                    fontWeight: 450
+                  }}>
+                    Find exceptional talent for your every project.
+                  </p>
+
+                  {/* Rounded Search Bar */}
+                  <div style={{ maxWidth: '440px', marginBottom: '16px' }}>
+                    <form onSubmit={handleUniversalSearch}>
+                      <div 
+                        style={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          backgroundColor: '#FFFFFF',
+                          border: '1.5px solid #DDD5C5',
+                          borderRadius: 'var(--radius-full)',
+                          padding: '6px 14px 6px 18px',
+                          boxShadow: '0 4px 16px rgba(28, 25, 23, 0.05)',
+                          transition: 'border-color 0.15s ease'
+                        }}
+                      >
+                        <input 
+                          type="text"
+                          placeholder="Search for skills, services..."
+                          value={universalSearchQuery}
+                          onChange={(e) => setUniversalSearchQuery(e.target.value)}
+                          style={{ 
+                            background: 'transparent', 
+                            border: 'none', 
+                            color: '#1C1917', 
+                            fontSize: '0.94rem', 
+                            width: '100%', 
+                            outline: 'none' 
+                          }}
+                        />
+                        <button 
+                          type="submit" 
+                          aria-label="Search"
+                          style={{ 
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: '#C28E2B',
+                            padding: '4px'
+                          }}
+                        >
+                          <Search size={19} strokeWidth={2.2} />
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  {/* Quick Skill Tags (Pills) matching Sample Theme */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '24px' }}>
+                    {[
+                      { label: 'Video', slug: 'video-content', active: true },
+                      { label: 'UGC', slug: 'ugc-creators', active: false },
+                      { label: 'Coding', slug: 'technology', active: false },
+                      { label: 'Design', slug: 'design', active: false }
+                    ].map((item) => (
+                      <button
+                        key={item.label}
+                        type="button"
+                        onClick={() => onNavigate('opportunities', { category: item.slug })}
+                        style={{
+                          backgroundColor: item.active ? '#C28E2B' : '#FAF8F5',
+                          border: `1.5px solid ${item.active ? '#C28E2B' : '#DDD5C5'}`,
+                          borderRadius: 'var(--radius-full)',
+                          padding: '6px 18px',
+                          fontSize: '0.86rem',
+                          fontWeight: 600,
+                          color: item.active ? '#FFFFFF' : '#44403C',
+                          cursor: 'pointer',
+                          boxShadow: item.active ? '0 2px 8px rgba(194, 142, 43, 0.28)' : 'none',
+                          transition: 'all 0.15s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!item.active) e.currentTarget.style.backgroundColor = '#F3EFEA';
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!item.active) e.currentTarget.style.backgroundColor = '#FAF8F5';
+                        }}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+
+                </div>
+
+                {/* Right Column: 3D Nest on Pedestal Showcase (Theme 1 Natural Warm Glow) */}
+                <div 
+                  style={{ 
+                    position: 'relative',
+                    borderRadius: '24px',
+                    overflow: 'hidden',
+                    backgroundColor: 'transparent',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <img 
+                    src="/tnest-pedestal-nest.jpg" 
+                    alt="Tnest Golden Nest Ecosystem & Escrow"
+                    style={{
+                      width: '100%',
+                      maxHeight: '420px',
+                      objectFit: 'contain',
+                      borderRadius: '24px',
+                      display: 'block'
+                    }}
+                  />
+                </div>
+
+              </div>
+
+              {/* Bottom 3-Step Escrow Process Flow Ribbon (Theme 1 Floating Pill Banner) */}
+              <div 
+                style={{
+                  backgroundColor: '#FAF8F5',
+                  borderRadius: 'var(--radius-full)',
+                  border: '1.5px solid #EBE4D8',
+                  padding: '12px 32px',
+                  boxShadow: '0 8px 24px rgba(28, 25, 23, 0.05)',
+                  display: 'grid',
+                  gridTemplateColumns: '1fr auto 1.15fr auto 1.35fr',
+                  alignItems: 'center',
+                  gap: '20px',
+                  position: 'relative',
+                  zIndex: 2
+                }}
+              >
+                {/* Step 1 */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <div 
-                    style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      gap: '10px', 
-                      backgroundColor: 'var(--bg-card)',
-                      border: '1.5px solid var(--border-medium)',
-                      borderRadius: 'var(--radius-sm)',
-                      padding: '6px 8px 6px 14px',
-                      boxShadow: '0 4px 14px rgba(15, 23, 42, 0.05)'
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '50%',
+                      backgroundColor: '#FEF3C7',
+                      background: 'radial-gradient(circle at 35% 30%, #FDE68A 0%, #D97706 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      boxShadow: '0 2px 8px rgba(217, 119, 6, 0.28)'
                     }}
                   >
-                    <Search size={18} color="var(--text-muted)" style={{ flexShrink: 0 }} />
-                    <input 
-                      type="text"
-                      placeholder="Search tasks, jobs, skills or people..."
-                      value={universalSearchQuery}
-                      onChange={(e) => setUniversalSearchQuery(e.target.value)}
-                      style={{ 
-                        background: 'transparent', 
-                        border: 'none', 
-                        color: 'var(--text-primary)', 
-                        fontSize: '0.95rem', 
-                        width: '100%', 
-                        outline: 'none' 
-                      }}
-                    />
-                    <button 
-                      type="submit" 
-                      className="btn btn-primary btn-sm"
-                      style={{ padding: '8px 18px' }}
-                    >
-                      Search
-                    </button>
+                    <Plus size={22} color="#FFFFFF" strokeWidth={3} />
                   </div>
-                </form>
-
-                {/* Quick Keyword Links */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '10px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                  <span>Popular:</span>
-                  {[
-                    { label: 'Video Editing', slug: 'video-content' },
-                    { label: 'UGC Creators', slug: 'ugc-creators' },
-                    { label: 'Design', slug: 'design' },
-                    { label: 'Technology', slug: 'technology' },
-                    { label: 'Marketing', slug: 'marketing-advertising' }
-                  ].map((item) => (
-                    <button
-                      key={item.label}
-                      type="button"
-                      onClick={() => onNavigate('opportunities', { category: item.slug })}
-                      style={{
-                        background: 'none',
-                        border: 'none',
-                        color: 'var(--accent-primary)',
-                        fontSize: '0.8rem',
-                        cursor: 'pointer',
-                        textDecoration: 'underline'
-                      }}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Dual Cards for Public Visitors */}
-              <div className="grid-cols-2" style={{ gap: '20px', maxWidth: '860px', margin: '0 auto 36px', textAlign: 'left' }}>
-                
-                {/* Section 1: For Clients */}
-                <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid var(--border-medium)' }}>
                   <div>
-                    <span className="badge badge-primary" style={{ marginBottom: '10px', fontSize: '0.75rem' }}>
-                      For Clients & Businesses
-                    </span>
-                    <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-primary)' }}>
-                      Need something done?
-                    </h2>
-                    <strong style={{ display: 'block', fontSize: '0.92rem', color: 'var(--accent-primary)', marginBottom: '8px' }}>
-                      Find the right person.
-                    </strong>
-                    <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '18px' }}>
-                      Post a task or project brief in minutes. Receive verified proposals, inspect portfolios, and pay securely upon deliverable approval.
-                    </p>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                    <button 
-                      onClick={() => {
-                        if (!isAuthenticated) onOpenAuth('login');
-                        else onNavigate('wizard');
-                      }} 
-                      className="btn btn-primary btn-sm"
-                    >
-                      Post Task
-                    </button>
-                    <button 
-                      onClick={() => onNavigate('browse')} 
-                      className="btn btn-secondary btn-sm"
-                    >
-                      Discover Doers
-                    </button>
+                    <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#1C1917', marginBottom: '2px' }}>
+                      1. Post Your Need
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: '#78716C', lineHeight: 1.3 }}>
+                      Share your project or task details.
+                    </div>
                   </div>
                 </div>
 
-                {/* Section 2: For Doers */}
-                <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid var(--border-medium)' }}>
-                  <div>
-                    <span className="badge badge-emerald" style={{ marginBottom: '10px', fontSize: '0.75rem' }}>
-                      For Creators & Specialists
-                    </span>
-                    <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-primary)' }}>
-                      Have a skill?
-                    </h2>
-                    <strong style={{ display: 'block', fontSize: '0.92rem', color: 'var(--status-success)', marginBottom: '8px' }}>
-                      Find opportunities.
-                    </strong>
-                    <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '18px' }}>
-                      Build your reputation with a verified public profile. Apply to active opportunities with guaranteed milestone payouts.
-                    </p>
-                  </div>
+                {/* Arrow */}
+                <div style={{ color: '#78716C', fontSize: '1.2rem', fontWeight: 300, userSelect: 'none' }}>
+                  →
+                </div>
 
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                    <button 
-                      onClick={() => onNavigate('opportunities')} 
-                      className="btn btn-primary btn-sm"
-                    >
-                      Browse Opportunities
-                    </button>
-                    <button 
-                      onClick={() => {
-                        if (!isAuthenticated) onOpenAuth('register');
-                        else onNavigate('profile', { slug: user?.slug || 'my-profile' });
-                      }} 
-                      className="btn btn-secondary btn-sm"
-                    >
-                      {isAuthenticated ? 'My Profile' : 'Create Profile'}
-                    </button>
+                {/* Step 2 */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div 
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '50%',
+                      backgroundColor: '#FEF3C7',
+                      background: 'radial-gradient(circle at 35% 30%, #FDE68A 0%, #C28E2B 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      boxShadow: '0 2px 8px rgba(194, 142, 43, 0.28)'
+                    }}
+                  >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 14C4 18.5 7.5 21 12 21C16.5 21 20 18.5 20 14C18 15 15 16 12 16C9 16 6 15 4 14Z" fill="#78350F" />
+                      <circle cx="12" cy="11" r="5" fill="#FBBF24" stroke="#D97706" strokeWidth="1.2" />
+                      <path d="M10 9H14M10 11H14M11.5 9V14" stroke="#78350F" strokeWidth="1.4" strokeLinecap="round" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#1C1917', marginBottom: '2px' }}>
+                      2. Secure Deposit
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: '#78716C', lineHeight: 1.3 }}>
+                      Payment is held safely until work is completed.
+                    </div>
+                  </div>
+                </div>
+
+                {/* Arrow */}
+                <div style={{ color: '#78716C', fontSize: '1.2rem', fontWeight: 300, userSelect: 'none' }}>
+                  →
+                </div>
+
+                {/* Step 3 */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div 
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '50%',
+                      backgroundColor: '#DCFCE7',
+                      background: 'radial-gradient(circle at 35% 30%, #BBF7D0 0%, #16A34A 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      boxShadow: '0 2px 8px rgba(22, 163, 74, 0.28)'
+                    }}
+                  >
+                    <CheckCircle2 size={22} color="#FFFFFF" strokeWidth={2.6} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#1C1917', marginBottom: '2px' }}>
+                      3. Review & Release
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: '#78716C', lineHeight: 1.3 }}>
+                      Approve final work to pay your Doer.
+                    </div>
                   </div>
                 </div>
 
               </div>
+
             </div>
           )}
 

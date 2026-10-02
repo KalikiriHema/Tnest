@@ -461,7 +461,7 @@ export const UpdateClientProfile: React.FC<UpdateClientProfileProps> = ({ onNavi
               fontWeight: 800,
               fontSize: '0.9rem',
               flexShrink: 0,
-              boxShadow: activeStep === 1 ? '0 2px 8px rgba(0, 113, 227, 0.35)' : 'none'
+              boxShadow: activeStep === 1 ? '0 2px 8px rgba(217, 119, 6, 0.35)' : 'none'
             }}>
               1
             </span>
@@ -512,7 +512,7 @@ export const UpdateClientProfile: React.FC<UpdateClientProfileProps> = ({ onNavi
               fontWeight: 800,
               fontSize: '0.9rem',
               flexShrink: 0,
-              boxShadow: activeStep === 2 ? '0 2px 8px rgba(0, 113, 227, 0.35)' : 'none'
+              boxShadow: activeStep === 2 ? '0 2px 8px rgba(217, 119, 6, 0.35)' : 'none'
             }}>
               2
             </span>
@@ -563,7 +563,7 @@ export const UpdateClientProfile: React.FC<UpdateClientProfileProps> = ({ onNavi
               fontWeight: 800,
               fontSize: '0.9rem',
               flexShrink: 0,
-              boxShadow: activeStep === 3 ? '0 2px 8px rgba(0, 113, 227, 0.35)' : 'none'
+              boxShadow: activeStep === 3 ? '0 2px 8px rgba(217, 119, 6, 0.35)' : 'none'
             }}>
               3
             </span>

@@ -464,51 +464,70 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                   Home
                 </button>
 
-                {/* 2. Browse Opportunities (Visible for Public, Doers, DualRole; Hidden for pure Clients) */}
-                {(!isAuthenticated || user?.role === 'Professional' || user?.role === 'DualRole') && (
-                  <button 
-                    onClick={() => onNavigate('opportunities')}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      color: currentView === 'opportunities' ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                      fontWeight: currentView === 'opportunities' ? 600 : 450,
-                      fontSize: '0.875rem',
-                      cursor: 'pointer',
-                      padding: '6px 12px',
-                      borderRadius: 'var(--radius-sm)',
-                      transition: 'color 0.15s ease, background-color 0.15s ease'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    Browse Opportunities
-                  </button>
-                )}
+                {/* 1. Browse Talent */}
+                <button 
+                  onClick={() => onNavigate('browse')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: currentView === 'browse' ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                    fontWeight: currentView === 'browse' ? 600 : 500,
+                    fontSize: '0.875rem',
+                    cursor: 'pointer',
+                    padding: '6px 12px',
+                    borderRadius: 'var(--radius-sm)',
+                    transition: 'color 0.15s ease, background-color 0.15s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                  Browse Talent
+                </button>
 
-                {/* 3. Find Doers (Visible for Public, Clients, DualRole; Hidden for pure Doers) */}
-                {(!isAuthenticated || user?.role === 'Client' || user?.role === 'DualRole') && (
-                  <button 
-                    onClick={() => onNavigate('browse')}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      color: currentView === 'browse' ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                      fontWeight: currentView === 'browse' ? 600 : 450,
-                      fontSize: '0.875rem',
-                      cursor: 'pointer',
-                      padding: '6px 12px',
-                      borderRadius: 'var(--radius-sm)',
-                      transition: 'color 0.15s ease, background-color 0.15s ease'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    Find Doers
-                  </button>
-                )}
+                {/* 2. Post a Project / Post Task */}
+                <button 
+                  onClick={() => {
+                    if (!isAuthenticated) onOpenAuth('login');
+                    else onNavigate('wizard');
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: currentView === 'wizard' ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                    fontWeight: currentView === 'wizard' ? 600 : 500,
+                    fontSize: '0.875rem',
+                    cursor: 'pointer',
+                    padding: '6px 12px',
+                    borderRadius: 'var(--radius-sm)',
+                    transition: 'color 0.15s ease, background-color 0.15s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                  Post a Project
+                </button>
 
-                {/* 4. Categories Dropdown (Visible for Clients, Doers, DualRole & Public) */}
+                {/* 3. How it Works */}
+                <button
+                  onClick={() => onNavigate('how-it-works')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: currentView === 'how-it-works' ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                    fontWeight: currentView === 'how-it-works' ? 600 : 500,
+                    fontSize: '0.875rem',
+                    cursor: 'pointer',
+                    padding: '6px 12px',
+                    borderRadius: 'var(--radius-sm)',
+                    transition: 'color 0.15s ease, background-color 0.15s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                  How it Works
+                </button>
+
+                {/* 4. Resources / Categories Dropdown */}
                 <div ref={catRef} style={{ position: 'relative' }}>
                   <button 
                     onClick={() => setCategoriesOpen(!categoriesOpen)}
@@ -516,7 +535,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                       background: 'none',
                       border: 'none',
                       color: categoriesOpen ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                      fontWeight: 450,
+                      fontWeight: 500,
                       fontSize: '0.875rem',
                       cursor: 'pointer',
                       display: 'flex',
@@ -529,7 +548,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                   >
-                    <span>Categories</span>
+                    <span>Resources</span>
                     <ChevronDown size={13} style={{ transform: categoriesOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.15s ease', color: 'var(--text-muted)' }} />
                   </button>
 
@@ -549,7 +568,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                       }}
                     >
                       <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', padding: '6px 10px 4px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                        Disciplines
+                        Disciplines & Skills
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', maxHeight: '320px', overflowY: 'auto' }}>
                         {V1_CATEGORIES.map((cat) => (
@@ -585,14 +604,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                   )}
                 </div>
 
-                {/* 5. How It Works (Visible for Clients, Doers, DualRole & Public) */}
+                {/* 5. About */}
                 <button
                   onClick={() => onNavigate('how-it-works')}
                   style={{
                     background: 'none',
                     border: 'none',
-                    color: currentView === 'how-it-works' ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                    fontWeight: currentView === 'how-it-works' ? 600 : 450,
+                    color: 'var(--text-secondary)',
+                    fontWeight: 500,
                     fontSize: '0.875rem',
                     cursor: 'pointer',
                     padding: '6px 12px',
@@ -602,30 +621,22 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                 >
-                  How It Works
+                  About
                 </button>
               </>
             )}
-
-
 
           </nav>
 
         </div>
 
         {/* RIGHT: CTAs & AUTH */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           
-          {/* Header CTA: Post Task for Clients / Dual Role / Public, Browse Opportunities for Doers, Clean for Admin */}
-          {(!isAuthenticated || user?.role === 'Client' || user?.role === 'DualRole') && (
+          {/* Header CTA for Logged In Users */}
+          {isAuthenticated && (user?.role === 'Client' || user?.role === 'DualRole') && (
             <button
-              onClick={() => {
-                if (!isAuthenticated) {
-                  onOpenAuth('login');
-                } else {
-                  onNavigate('wizard');
-                }
-              }}
+              onClick={() => onNavigate('wizard')}
               className="btn btn-primary btn-sm"
               style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '5px' }}
             >
@@ -646,22 +657,46 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
           )}
 
           {!isAuthenticated ? (
-            /* Public Auth Buttons */
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            /* Public Auth Buttons matching Theme 1 */
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <button
                 onClick={() => onOpenAuth('login')}
-                className="btn btn-ghost btn-sm"
-                style={{ fontWeight: 500 }}
+                style={{
+                  background: 'none',
+                  border: '1px solid var(--border-medium)',
+                  borderRadius: 'var(--radius-full)',
+                  padding: '7px 18px',
+                  fontSize: '0.875rem',
+                  fontWeight: 600,
+                  color: 'var(--text-primary)',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                  backgroundColor: '#FFFFFF'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-secondary)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
               >
                 Log In
               </button>
 
               <button
                 onClick={() => onOpenAuth('register')}
-                className="btn btn-secondary btn-sm"
-                style={{ fontWeight: 500 }}
+                style={{
+                  background: 'linear-gradient(135deg, #C28E2B 0%, #D97706 100%)',
+                  border: 'none',
+                  borderRadius: 'var(--radius-full)',
+                  padding: '7px 20px',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#FFFFFF',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 10px rgba(194, 142, 43, 0.3)',
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.opacity = '0.92'}
+                onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
               >
-                Join
+                Sign Up
               </button>
             </div>
           ) : (
@@ -699,14 +734,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
                     height: '17px',
                     padding: '0 4px',
                     borderRadius: '9px',
-                    backgroundColor: '#0284C7',
+                    backgroundColor: 'var(--accent-primary)',
                     color: '#FFFFFF',
                     fontSize: '0.65rem',
                     fontWeight: 700,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 2px 5px rgba(2, 132, 199, 0.45)',
+                    boxShadow: '0 2px 5px rgba(217, 119, 6, 0.45)',
                     border: '1.5px solid var(--bg-card)',
                     pointerEvents: 'none',
                     lineHeight: 1,
