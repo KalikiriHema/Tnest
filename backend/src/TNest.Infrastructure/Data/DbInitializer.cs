@@ -9,7 +9,21 @@ public static class DbInitializer
 {
     public static async Task InitializeAsync(AppDbContext context, IPasswordHasher hasher)
     {
-        await context.Database.EnsureCreatedAsync();
+        try
+        {
+            if (context.Database.IsRelational())
+            {
+                await context.Database.MigrateAsync();
+            }
+            else
+            {
+                await context.Database.EnsureCreatedAsync();
+            }
+        }
+        catch
+        {
+            await context.Database.EnsureCreatedAsync();
+        }
 
         // 1. Ensure all 8 Top Categories exist
         var categoriesList = new List<Category>

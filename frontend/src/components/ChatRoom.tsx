@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import * as signalR from '@microsoft/signalr';
-import { api } from '../api';
+import { api, CHAT_HUB_URL } from '../api';
 import { ConversationItem, ChatMessageItem } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { 
@@ -191,7 +191,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
   // SignalR setup
   useEffect(() => {
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl('/hubs/chat')
+      .withUrl(CHAT_HUB_URL)
       .withAutomaticReconnect()
       .build();
 

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import * as signalR from '@microsoft/signalr';
+import { CHAT_HUB_URL } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import {
@@ -110,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
     let hubConnection: signalR.HubConnection | null = null;
     try {
       hubConnection = new signalR.HubConnectionBuilder()
-        .withUrl('/hubs/chat')
+        .withUrl(CHAT_HUB_URL)
         .withAutomaticReconnect()
         .build();
 

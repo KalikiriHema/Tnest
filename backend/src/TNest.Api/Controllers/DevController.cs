@@ -1,4 +1,4 @@
-﻿using TNest.Application.Common.Interfaces;
+using TNest.Application.Common.Interfaces;
 using TNest.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,11 +27,10 @@ public class DevController : ControllerBase
     [HttpPost("reseed")]
     public async Task<IActionResult> ReseedDatabase([FromHeader(Name = "X-Dev-Secret")] string? devSecret = null)
     {
-        var configuredSecret = _configuration["Security:DevSecretKey"];
-        // Only allow in Development OR with valid developer secret key
-        if (!_env.IsDevelopment() && (string.IsNullOrEmpty(devSecret) || devSecret != configuredSecret))
+        // Strictly disabled in Production environments
+        if (!_env.IsDevelopment())
         {
-            return Forbid("Dev endpoints are restricted and protected against unauthorized production access.");
+            return NotFound();
         }
         // Clear old transactional data
         _context.Reviews.RemoveRange(_context.Reviews);

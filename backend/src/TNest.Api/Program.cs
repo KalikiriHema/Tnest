@@ -8,6 +8,7 @@ using TNest.Application.Common.Interfaces;
 using TNest.Infrastructure;
 using TNest.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -111,17 +112,56 @@ builder.Services.AddRateLimiter(options =>
     });
 });
 
-// 5. CORS Configuration (Restricted to Trusted Frontend Domains)
+// 5. CORS Configuration (Supports local dev, configured frontend domains, and Vercel/Render PaaS domains)
+var allowedOriginsList = new List<string>
+{
+    "http://localhost:5173", 
+    "http://localhost:3000", 
+    "http://127.0.0.1:5173", 
+    "http://127.0.0.1:3000"
+};
+
+var envAllowedOrigins = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS") 
+    ?? builder.Configuration["Cors:AllowedOrigins"]
+    ?? Environment.GetEnvironmentVariable("FRONTEND_URL");
+
+if (!string.IsNullOrWhiteSpace(envAllowedOrigins))
+{
+    var extraOrigins = envAllowedOrigins
+        .Split(new[] { ',', ';', ' ' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+    allowedOriginsList.AddRange(extraOrigins);
+}
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins(
-            "http://localhost:5173", 
-            "http://localhost:3000", 
-            "http://127.0.0.1:5173", 
-            "http://127.0.0.1:3000"
-        )
+        policy.SetIsOriginAllowed(origin =>
+        {
+            if (string.IsNullOrWhiteSpace(origin)) return false;
+            
+            // Check explicit list
+            if (allowedOriginsList.Any(o => string.Equals(o.TrimEnd('/'), origin.TrimEnd('/'), StringComparison.OrdinalIgnoreCase)))
+            {
+                return true;
+            }
+
+            try
+            {
+                var uri = new Uri(origin);
+                // Allow localhost, vercel.app preview/production subdomains, and onrender.com subdomains
+                if (uri.Host == "localhost" || 
+                    uri.Host == "127.0.0.1" || 
+                    uri.Host.EndsWith(".vercel.app", StringComparison.OrdinalIgnoreCase) || 
+                    uri.Host.EndsWith(".onrender.com", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            catch { }
+
+            return false;
+        })
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
@@ -153,6 +193,12 @@ app.Use(async (context, next) =>
     }
 });
 
+// Forwarded headers for reverse proxies (Render, Cloudflare, Traefik, etc.)
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
 // 6. Security Headers Middleware (OWASP recommended defenses)
 app.Use(async (context, next) =>
 {
@@ -163,7 +209,7 @@ app.Use(async (context, next) =>
     context.Response.Headers.Append("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
     context.Response.Headers.Append("Content-Security-Policy", 
         "default-src 'self'; " +
-        "connect-src 'self' http://localhost:* https://localhost:* ws://localhost:* wss://localhost:*; " +
+        "connect-src 'self' http://localhost:* https://localhost:* ws://localhost:* wss://localhost:* https: wss:; " +
         "img-src 'self' data: https: blob:; " +
         "font-src 'self' https: data:; " +
         "style-src 'self' 'unsafe-inline' https:; " +
@@ -188,7 +234,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseHsts();
-    app.UseHttpsRedirection();
 }
 
 app.UseCors("AllowFrontend");

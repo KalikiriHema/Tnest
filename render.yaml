@@ -1,0 +1,23 @@
+services:
+  # TNest Backend .NET 10 Web API Service
+  - type: web
+    name: tnest-backend
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
+    plan: free
+    region: oregon
+    healthCheckPath: /healthz
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: DATABASE_URL
+        sync: false # Set to your Supabase connection string (e.g. postgresql://postgres:password@db.xxxx.supabase.co:5432/postgres)
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT__Issuer
+        value: TNest
+      - key: JWT__Audience
+        value: TNestAudience
+      - key: ALLOWED_ORIGINS
+        value: https://localhost:5173

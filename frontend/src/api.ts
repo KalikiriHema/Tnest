@@ -1,6 +1,9 @@
 import { AuthSession, Category, MatchScoreResult, ProfessionalProfile, ClientProfile, RequirementApplicant, ProjectItem, Proposal, Requirement, ConversationItem, ChatMessageItem } from './types';
 
-const API_BASE = '/api';
+const RAW_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+export const BACKEND_URL = RAW_BASE;
+export const API_BASE = RAW_BASE ? `${RAW_BASE}/api` : '/api';
+export const CHAT_HUB_URL = RAW_BASE ? `${RAW_BASE}/hubs/chat` : '/hubs/chat';
 
 function getStoredSession(): AuthSession | null {
   const sessionStr = localStorage.getItem('tnest_session');

@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tnest-backend
+    ports:
+      - "5145:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - JWT_SECRET_KEY=TNest_SuperSecret_Jwt_EncryptionKey_2026_KeyMustBeLongEnough_Min32Bytes!
+      - JWT__Issuer=TNest
+      - JWT__Audience=TNestAudience
+      - ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173
+      - DATA_DIR=/var/data
+    volumes:
+      - tnest-data:/var/data
+    restart: unless-stopped
+
+volumes:
+  tnest-data:
