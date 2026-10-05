@@ -25,6 +25,18 @@ public static class DbInitializer
             await context.Database.EnsureCreatedAsync();
         }
 
+        try
+        {
+            if (context.Database.IsRelational())
+            {
+                await context.Database.ExecuteSqlRawAsync(@"
+                    ALTER TABLE ""Users"" ADD COLUMN IF NOT EXISTS ""GoogleSubjectId"" text;
+                    ALTER TABLE ""Users"" ADD COLUMN IF NOT EXISTS ""AuthProvider"" text DEFAULT 'Local';
+                ");
+            }
+        }
+        catch { }
+
         // 1. Ensure all 8 Top Categories exist
         var categoriesList = new List<Category>
         {

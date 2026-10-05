@@ -20,6 +20,8 @@ public class User
     public bool IsPhoneVerified { get; set; }
     public bool IsActive { get; set; } = true;
     public string? SuspensionReason { get; set; }
+    public string? GoogleSubjectId { get; set; }
+    public string AuthProvider { get; set; } = "Local";
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAtUtc { get; set; }
 

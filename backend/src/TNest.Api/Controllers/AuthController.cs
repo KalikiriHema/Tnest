@@ -3,6 +3,7 @@ using TNest.Application.Common.Interfaces;
 using TNest.Application.DTOs;
 using TNest.Domain.Entities;
 using TNest.Infrastructure.Data;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -18,12 +19,14 @@ public class AuthController : ControllerBase
     private readonly AppDbContext _context;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IJwtTokenService _jwtTokenService;
+    private readonly IConfiguration _configuration;
 
-    public AuthController(AppDbContext context, IPasswordHasher passwordHasher, IJwtTokenService jwtTokenService)
+    public AuthController(AppDbContext context, IPasswordHasher passwordHasher, IJwtTokenService jwtTokenService, IConfiguration configuration)
     {
         _context = context;
         _passwordHasher = passwordHasher;
         _jwtTokenService = jwtTokenService;
+        _configuration = configuration;
     }
 
     public record RegisterRequest(
@@ -38,6 +41,12 @@ public class AuthController : ControllerBase
 
     public record LoginRequest(string Email, string Password);
     public record RefreshRequest(string RefreshToken);
+    public record GoogleAuthRequest(
+        string IdToken,
+        string? Role = null,
+        string? CompanyName = null,
+        string? Headline = null
+    );
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -191,6 +200,167 @@ public class AuthController : ControllerBase
                 companyName = user.ClientProfile?.CompanyName,
                 headline = user.ProfessionalProfile?.Headline,
                 avatarUrl = user.ClientProfile?.AvatarUrl ?? user.ProfessionalProfile?.AvatarUrl,
+                bio = user.ClientProfile?.Bio ?? user.ProfessionalProfile?.Bio,
+                websiteUrl = user.ClientProfile?.WebsiteUrl ?? user.ProfessionalProfile?.WebsiteUrl,
+                hourlyRate = user.ProfessionalProfile?.HourlyRate,
+                city = user.ProfessionalProfile?.City
+            }
+        });
+    }
+
+    [HttpPost("google")]
+    public async Task<IActionResult> GoogleAuth([FromBody] GoogleAuthRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.IdToken))
+        {
+            return BadRequest(new { message = "Google ID token is required." });
+        }
+
+        GoogleJsonWebSignature.Payload payload;
+        try
+        {
+            var clientId = _configuration["GoogleAuth:ClientId"]
+                ?? Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID")
+                ?? Environment.GetEnvironmentVariable("VITE_GOOGLE_CLIENT_ID");
+
+            var settings = new GoogleJsonWebSignature.ValidationSettings();
+            if (!string.IsNullOrWhiteSpace(clientId))
+            {
+                settings.Audience = new[] { clientId };
+            }
+
+            payload = await GoogleJsonWebSignature.ValidateAsync(request.IdToken, settings);
+        }
+        catch (Exception ex)
+        {
+            return Unauthorized(new { message = "Invalid Google authentication token: " + ex.Message });
+        }
+
+        if (payload == null || string.IsNullOrWhiteSpace(payload.Email))
+        {
+            return Unauthorized(new { message = "Could not retrieve email from Google token." });
+        }
+
+        var normalizedEmail = payload.Email.Trim().ToLowerInvariant();
+        var user = await _context.Users
+            .Include(u => u.ClientProfile)
+            .Include(u => u.ProfessionalProfile)
+            .FirstOrDefaultAsync(u => u.Email.ToLower() == normalizedEmail || (u.GoogleSubjectId != null && u.GoogleSubjectId == payload.Subject));
+
+        if (user == null)
+        {
+            if (!Enum.TryParse<UserRole>(request.Role, true, out var role) || role == UserRole.Admin)
+            {
+                role = UserRole.Client;
+            }
+
+            var name = !string.IsNullOrWhiteSpace(payload.Name) 
+                ? payload.Name.Trim() 
+                : (!string.IsNullOrWhiteSpace(payload.GivenName) ? $"{payload.GivenName} {payload.FamilyName}".Trim() : normalizedEmail.Split('@')[0]);
+
+            user = new User
+            {
+                Id = Guid.NewGuid(),
+                FullName = name,
+                Email = normalizedEmail,
+                PhoneNumber = "",
+                PasswordHash = "",
+                Role = role,
+                IsEmailVerified = true,
+                IsPhoneVerified = false,
+                GoogleSubjectId = payload.Subject,
+                AuthProvider = "Google",
+                IsActive = true
+            };
+
+            if (role == UserRole.Client || role == UserRole.DualRole)
+            {
+                user.ClientProfile = new ClientProfile
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = user.Id,
+                    CompanyName = request.CompanyName ?? user.FullName,
+                    ContactName = user.FullName,
+                    AvatarUrl = payload.Picture
+                };
+            }
+
+            if (role == UserRole.Professional || role == UserRole.DualRole)
+            {
+                var slug = name.ToLowerInvariant().Replace(" ", "-") + "-" + Random.Shared.Next(100, 999);
+                user.ProfessionalProfile = new ProfessionalProfile
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = user.Id,
+                    DisplayName = name,
+                    Slug = slug,
+                    Headline = request.Headline ?? "Creative Specialist & Content Creator",
+                    Bio = "Passionate creative producing high-retention digital media assets.",
+                    HourlyRate = 2000,
+                    TurnaroundDays = 3,
+                    Languages = new List<string> { "English" },
+                    AvatarUrl = payload.Picture
+                };
+            }
+
+            _context.Users.Add(user);
+        }
+        else
+        {
+            if (string.IsNullOrEmpty(user.GoogleSubjectId))
+            {
+                user.GoogleSubjectId = payload.Subject;
+            }
+            user.IsEmailVerified = true;
+
+            if (user.ClientProfile != null && string.IsNullOrEmpty(user.ClientProfile.AvatarUrl) && !string.IsNullOrEmpty(payload.Picture))
+            {
+                user.ClientProfile.AvatarUrl = payload.Picture;
+            }
+            if (user.ProfessionalProfile != null && string.IsNullOrEmpty(user.ProfessionalProfile.AvatarUrl) && !string.IsNullOrEmpty(payload.Picture))
+            {
+                user.ProfessionalProfile.AvatarUrl = payload.Picture;
+            }
+        }
+
+        if (!user.IsActive)
+        {
+            return StatusCode(StatusCodes.Status403Forbidden, new { message = "Your account has been deactivated or suspended." });
+        }
+
+        var (refreshToken, refreshExpires) = _jwtTokenService.GenerateRefreshToken();
+        var newRefreshToken = new RefreshToken
+        {
+            Id = Guid.NewGuid(),
+            UserId = user.Id,
+            Token = refreshToken,
+            ExpiresAtUtc = refreshExpires,
+            CreatedByIp = HttpContext.Connection.RemoteIpAddress?.ToString()
+        };
+        _context.RefreshTokens.Add(newRefreshToken);
+
+        await _context.SaveChangesAsync();
+
+        var (accessToken, accessExpires) = _jwtTokenService.GenerateAccessToken(user);
+
+        return Ok(new
+        {
+            token = accessToken,
+            refreshToken,
+            expiresAt = accessExpires,
+            user = new
+            {
+                id = user.Id,
+                fullName = user.FullName,
+                email = user.Email,
+                phoneNumber = user.PhoneNumber,
+                role = user.Role.ToString(),
+                clientProfileId = user.ClientProfile?.Id,
+                professionalProfileId = user.ProfessionalProfile?.Id,
+                slug = user.ProfessionalProfile?.Slug,
+                companyName = user.ClientProfile?.CompanyName,
+                headline = user.ProfessionalProfile?.Headline,
+                avatarUrl = user.ClientProfile?.AvatarUrl ?? user.ProfessionalProfile?.AvatarUrl ?? payload.Picture,
                 bio = user.ClientProfile?.Bio ?? user.ProfessionalProfile?.Bio,
                 websiteUrl = user.ClientProfile?.WebsiteUrl ?? user.ProfessionalProfile?.WebsiteUrl,
                 hourlyRate = user.ProfessionalProfile?.HourlyRate,

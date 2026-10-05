@@ -9,6 +9,7 @@ interface AuthContextType {
   activePersona: 'client' | 'doer';
   setActivePersona: (persona: 'client' | 'doer') => void;
   login: (email: string, pass: string) => Promise<void>;
+  googleLogin: (idToken: string, role?: string, companyName?: string, headline?: string) => Promise<void>;
   register: (data: any) => Promise<void>;
   logout: () => void;
   setAuthSession: (session: AuthSession) => void;
@@ -64,6 +65,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, pass: string) => {
     const data = await api.login({ email, password: pass });
+    setSession(data);
+    const savedPersona = localStorage.getItem('tnest_active_persona') as 'client' | 'doer' | null;
+    if (savedPersona) {
+      setActivePersonaState(savedPersona);
+    } else if (data.user.role === 'Professional') {
+      setActivePersonaState('doer');
+    } else {
+      setActivePersonaState('client');
+    }
+    localStorage.setItem('tnest_session', JSON.stringify(data));
+  };
+
+  const googleLogin = async (idToken: string, role?: string, companyName?: string, headline?: string) => {
+    const data = await api.googleLogin({ idToken, role, companyName, headline });
     setSession(data);
     const savedPersona = localStorage.getItem('tnest_active_persona') as 'client' | 'doer' | null;
     if (savedPersona) {
@@ -144,6 +159,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         activePersona,
         setActivePersona,
         login,
+        googleLogin,
         register,
         logout,
         setAuthSession,

@@ -110,6 +110,15 @@ export const api = {
     return handleResponseJson<AuthSession>(res, 'Invalid email or password credentials');
   },
 
+  googleLogin: async (data: { idToken: string; role?: string; companyName?: string; headline?: string }): Promise<AuthSession> => {
+    const res = await fetch(`${API_BASE}/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return handleResponseJson<AuthSession>(res, 'Google authentication failed');
+  },
+
   logout: async (): Promise<void> => {
     const session = getStoredSession();
     try {

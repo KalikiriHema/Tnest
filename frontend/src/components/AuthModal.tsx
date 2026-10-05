@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../context/AuthContext';
 import { X, Lock, Mail, User, Phone, Briefcase, Eye, EyeOff, ShieldCheck, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 import { UserRole } from '../types';
@@ -10,7 +11,7 @@ interface AuthModalProps {
 
 export const AuthModal: React.FC<AuthModalProps> = ({ initialTab = 'login', onClose }) => {
   const [tab, setTab] = useState<'login' | 'register'>(initialTab);
-  const { login, register, quickSwitch } = useAuth();
+  const { login, googleLogin, register, quickSwitch } = useAuth();
   
   // Registration Form State
   const [fullName, setFullName] = useState('');
@@ -89,6 +90,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({ initialTab = 'login', onCl
       onClose();
     } catch (err: any) {
       setError(err.message || 'Invalid email or password');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    if (!credentialResponse?.credential) {
+      setError('Google authentication failed - no credential token returned.');
+      return;
+    }
+    setError(null);
+    setLoading(true);
+    try {
+      const assignedRole: UserRole = intent === 'both' ? 'DualRole' : intent === 'doer' ? 'Professional' : 'Client';
+      await googleLogin(
+        credentialResponse.credential,
+        tab === 'register' ? assignedRole : undefined,
+        tab === 'register' && intent !== 'doer' ? companyName || undefined : undefined,
+        tab === 'register' && intent !== 'client' ? headline || undefined : undefined
+      );
+      onClose();
+    } catch (err: any) {
+      setError(err.message || 'Google authentication failed');
     } finally {
       setLoading(false);
     }
@@ -250,6 +274,30 @@ export const AuthModal: React.FC<AuthModalProps> = ({ initialTab = 'login', onCl
         {/* LOGIN TAB */}
         {tab === 'login' ? (
           <div>
+            {/* Google OAuth 1-Click Login */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '14px' }}>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={() => setError('Google sign-in was cancelled or failed.')}
+                  theme="outline"
+                  size="large"
+                  text="signin_with"
+                  shape="rectangular"
+                  width="100%"
+                />
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '14px 0 16px' }}>
+              <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--border-subtle)' }} />
+              <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                or sign in with email
+              </span>
+              <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--border-subtle)' }} />
+            </div>
+
             <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div>
                 <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '5px' }}>
@@ -494,6 +542,30 @@ export const AuthModal: React.FC<AuthModalProps> = ({ initialTab = 'login', onCl
                   );
                 })}
               </div>
+            </div>
+
+            {/* Google 1-Click Fast Register */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '4px 0 2px' }}>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={() => setError('Google sign-up was cancelled or failed.')}
+                  theme="outline"
+                  size="large"
+                  text="signup_with"
+                  shape="rectangular"
+                  width="100%"
+                />
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '6px 0 4px' }}>
+              <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--border-subtle)' }} />
+              <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                or create with email
+              </span>
+              <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--border-subtle)' }} />
             </div>
 
             <div>
