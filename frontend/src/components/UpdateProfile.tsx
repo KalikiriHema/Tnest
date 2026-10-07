@@ -518,15 +518,10 @@ export const UpdateProfile: React.FC<UpdateProfileProps> = ({ onNavigate }) => {
         )}
 
         {/* 2-COLUMN MODERN EDITOR LAYOUT */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '260px 1fr',
-          gap: '24px',
-          alignItems: 'flex-start'
-        }}>
+        <div className="responsive-grid-sidebar-left">
           
           {/* LEFT SIDEBAR NAVIGATION */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', position: 'sticky', top: '76px' }}>
+          <div className="responsive-sticky-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             
             <div className="card" style={{ padding: '8px', overflow: 'hidden' }}>
               <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', padding: '10px 12px 6px' }}>
@@ -1137,7 +1132,7 @@ export const UpdateProfile: React.FC<UpdateProfileProps> = ({ onNavigate }) => {
                   <label style={{ fontSize: '0.82rem', fontWeight: 600, display: 'block', marginBottom: '8px', color: 'var(--text-primary)' }}>
                     Current Availability Status
                   </label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+                  <div className="responsive-3col">
                     {[
                       { id: 'Available', label: 'Available', desc: 'Ready for new tasks', badge: '🟢' },
                       { id: 'Busy', label: 'Busy', desc: 'Taking select tasks', badge: '🟡' },
@@ -1171,7 +1166,7 @@ export const UpdateProfile: React.FC<UpdateProfileProps> = ({ onNavigate }) => {
                   <label style={{ fontSize: '0.82rem', fontWeight: 600, display: 'block', marginBottom: '8px', color: 'var(--text-primary)' }}>
                     Pricing Structure
                   </label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '16px' }}>
+                  <div className="responsive-4col" style={{ marginBottom: '16px' }}>
                     {[
                       { id: 'PerTask', label: 'Per Task' },
                       { id: 'PerHour', label: 'Per Hour' },

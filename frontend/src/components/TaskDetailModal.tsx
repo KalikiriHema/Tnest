@@ -268,7 +268,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
           {/* 1. SCREEN 3: OPPORTUNITY DETAIL VIEW                          */}
           {/* ------------------------------------------------------------- */}
           {modalMode === 'view' && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 310px', gap: '28px', alignItems: 'flex-start' }}>
+            <div className="responsive-modal-grid">
               
               {/* Left Column: Opportunity Details */}
               <div>
@@ -824,7 +824,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   </p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', borderTop: '1px solid var(--border-subtle)', paddingTop: '14px' }}>
+                <div className="responsive-2col" style={{ gap: '14px', borderTop: '1px solid var(--border-subtle)', paddingTop: '14px' }}>
                   <div>
                     <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
                       Proposed Rate

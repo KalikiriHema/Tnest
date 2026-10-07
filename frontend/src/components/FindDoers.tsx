@@ -281,17 +281,13 @@ export const FindDoers: React.FC<FindDoersProps> = ({
       </div>
 
       {/* Two Column Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '28px', alignItems: 'flex-start' }}>
+      <div className="responsive-grid-sidebar-left">
         
         {/* Sidebar Filters */}
         <div 
-          className="card" 
+          className="card responsive-sticky-sidebar" 
           style={{ 
-            padding: '20px', 
-            position: 'sticky', 
-            top: '76px',
-            maxHeight: 'calc(100vh - 96px)',
-            overflowY: 'auto'
+            padding: '20px'
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid var(--border-subtle)' }}>

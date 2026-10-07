@@ -379,10 +379,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
       display: 'flex',
       alignItems: 'center'
     }}>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
+      <div className="container navbar-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
         
         {/* LEFT: BRAND & PRIMARY NAV */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
+        <div className="navbar-left-wrap" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           
           {/* Mobile Hamburger */}
           <button 
@@ -399,13 +399,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
             }}
             aria-label="Open menu"
           >
-            <Menu size={20} />
+            <Menu size={22} />
           </button>
 
           {/* Clean Logo */}
           <div 
             onClick={() => onNavigate('landing')}
-            style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', flexShrink: 0 }}
           >
             <Logo size="sm" />
           </div>
@@ -632,14 +632,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
         </div>
 
         {/* RIGHT: CTAs & AUTH */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div className="navbar-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           
           {/* Header CTA for Logged In Users */}
           {isAuthenticated && (user?.role === 'Client' || user?.role === 'DualRole') && (
             <button
               onClick={() => onNavigate('wizard')}
-              className="btn btn-primary btn-sm"
-              style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '5px' }}
+              className="btn btn-primary btn-sm navbar-desktop-cta"
+              style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '5px', whiteSpace: 'nowrap' }}
             >
               <Plus size={14} />
               <span>Post Task</span>
@@ -649,8 +649,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
           {isAuthenticated && user?.role === 'Professional' && (
             <button
               onClick={() => onNavigate('opportunities')}
-              className="btn btn-primary btn-sm"
-              style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}
+              className="btn btn-primary btn-sm navbar-desktop-cta"
+              style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}
             >
               <Compass size={14} />
               <span>Browse Opportunities</span>
@@ -659,20 +659,23 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
 
           {!isAuthenticated ? (
             /* Public Auth Buttons matching Theme 1 */
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div className="navbar-auth-buttons" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <button
                 onClick={() => onOpenAuth('login')}
+                className="navbar-auth-btn-login"
                 style={{
                   background: 'none',
                   border: '1px solid var(--border-medium)',
                   borderRadius: 'var(--radius-full)',
-                  padding: '7px 18px',
-                  fontSize: '0.875rem',
+                  padding: '6px 14px',
+                  fontSize: '0.85rem',
                   fontWeight: 600,
                   color: 'var(--text-primary)',
                   cursor: 'pointer',
                   transition: 'all 0.15s ease',
-                  backgroundColor: '#FFFFFF'
+                  backgroundColor: '#FFFFFF',
+                  whiteSpace: 'nowrap',
+                  lineHeight: '1.2'
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-secondary)'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
@@ -682,17 +685,20 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenA
 
               <button
                 onClick={() => onOpenAuth('register')}
+                className="navbar-auth-btn-signup"
                 style={{
                   background: 'linear-gradient(135deg, #C28E2B 0%, #D97706 100%)',
                   border: 'none',
                   borderRadius: 'var(--radius-full)',
-                  padding: '7px 20px',
-                  fontSize: '0.875rem',
+                  padding: '6px 16px',
+                  fontSize: '0.85rem',
                   fontWeight: 700,
                   color: '#FFFFFF',
                   cursor: 'pointer',
                   boxShadow: '0 2px 10px rgba(194, 142, 43, 0.3)',
-                  transition: 'all 0.15s ease'
+                  transition: 'all 0.15s ease',
+                  whiteSpace: 'nowrap',
+                  lineHeight: '1.2'
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.opacity = '0.92'}
                 onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}

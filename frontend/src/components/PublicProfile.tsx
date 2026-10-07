@@ -442,15 +442,13 @@ export const PublicProfile: React.FC<PublicProfileProps> = ({ slug, onNavigate, 
         </div>
 
         {/* 3. TWO-COLUMN MINIMAL LAYOUT: CONTENT + STICKY SIDEBAR */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '20px', alignItems: 'flex-start' }}>
+        <div className="responsive-grid-sidebar-right">
           
           {/* MAIN TABS AREA */}
           <div>
             
             {/* Minimal Segmented Tab Nav */}
-            <div style={{
-              display: 'flex',
-              gap: '4px',
+            <div className="scrollable-tabs-bar" style={{
               marginBottom: '16px',
               backgroundColor: 'var(--bg-secondary)',
               padding: '3px',
@@ -868,7 +866,7 @@ export const PublicProfile: React.FC<PublicProfileProps> = ({ slug, onNavigate, 
           </div>
 
           {/* RIGHT SIDEBAR: MINIMAL HIRE / INQUIRY */}
-          <div id="inquiry-widget" style={{ position: 'sticky', top: '76px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div id="inquiry-widget" className="responsive-sticky-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             
             <div className="card" style={{
               padding: '20px',

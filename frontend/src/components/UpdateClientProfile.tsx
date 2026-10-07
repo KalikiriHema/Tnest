@@ -425,12 +425,7 @@ export const UpdateClientProfile: React.FC<UpdateClientProfileProps> = ({ onNavi
         )}
 
         {/* HORIZONTAL ROW STEP TOGGLE 1 2 3 */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '12px',
-          marginBottom: '24px'
-        }}>
+        <div className="responsive-3col" style={{ marginBottom: '24px' }}>
           {/* STEP 1 TOGGLE */}
           <button
             type="button"

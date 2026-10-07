@@ -535,11 +535,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
 
               {/* 2-Column Split Master Hero */}
               <div 
+                className="responsive-hero-split"
                 style={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: '1.05fr 0.95fr', 
-                  gap: '36px', 
-                  alignItems: 'center',
                   textAlign: 'left',
                   position: 'relative',
                   zIndex: 1
@@ -688,16 +685,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
 
               {/* Bottom 3-Step Escrow Process Flow Ribbon (Theme 1 Floating Pill Banner) */}
               <div 
+                className="responsive-step-pill"
                 style={{
                   backgroundColor: '#FAF8F5',
                   borderRadius: 'var(--radius-full)',
                   border: '1.5px solid #EBE4D8',
                   padding: '12px 32px',
                   boxShadow: '0 8px 24px rgba(28, 25, 23, 0.05)',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr auto 1.15fr auto 1.35fr',
-                  alignItems: 'center',
-                  gap: '20px',
                   position: 'relative',
                   zIndex: 2
                 }}
@@ -731,7 +725,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                 </div>
 
                 {/* Arrow */}
-                <div style={{ color: '#78716C', fontSize: '1.2rem', fontWeight: 300, userSelect: 'none' }}>
+                <div className="responsive-step-divider" style={{ color: '#78716C', fontSize: '1.2rem', fontWeight: 300, userSelect: 'none' }}>
                   →
                 </div>
 
@@ -768,7 +762,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                 </div>
 
                 {/* Arrow */}
-                <div style={{ color: '#78716C', fontSize: '1.2rem', fontWeight: 300, userSelect: 'none' }}>
+                <div className="responsive-step-divider" style={{ color: '#78716C', fontSize: '1.2rem', fontWeight: 300, userSelect: 'none' }}>
                   →
                 </div>
 
@@ -1473,7 +1467,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, onOpenAuth
                     <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '8px' }}>
                       Experience & Complexity Tier
                     </label>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
+                    <div className="responsive-3col" style={{ gap: '8px' }}>
                       {(['standard', 'pro', 'expert'] as const).map((lvl) => (
                         <button
                           key={lvl}

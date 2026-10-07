@@ -960,7 +960,7 @@ export const ProDashboard: React.FC<ProDashboardProps> = ({ onNavigate }) => {
               </div>
 
               {/* 4. Bottom Row: Recent Applications & Active Work */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+              <div className="responsive-2col" style={{ gap: '24px' }}>
                 
                 {/* Left Card: Recent Applications */}
                 <div 

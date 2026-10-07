@@ -246,18 +246,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
         )}
 
         {/* 2-COLUMN BODY: SIDEBAR TABS + CONTENT */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', flex: 1, minHeight: 0 }}>
+        <div className="responsive-settings-grid">
           
           {/* LEFT SIDEBAR NAVIGATION */}
-          <div style={{
-            backgroundColor: 'var(--bg-secondary)',
-            borderRight: '1px solid var(--border-subtle)',
-            padding: '14px 10px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            gap: '6px'
-          }}>
+          <div className="responsive-settings-sidebar">
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               
@@ -369,7 +361,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
                   </p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="responsive-2col" style={{ gap: '12px' }}>
                   {/* Light Theme Card */}
                   <div
                     onClick={() => { setTheme('light'); showToast('Switched to Light mode'); }}

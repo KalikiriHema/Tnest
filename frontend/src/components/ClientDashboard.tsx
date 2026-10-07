@@ -394,17 +394,12 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({ onNavigate }) 
         )}
 
         {/* 2-COLUMN WORKSPACE: CLIENT SIDEBAR (LEFT) + CONTENT PANEL (RIGHT) */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '240px 1fr',
-          gap: '24px',
-          alignItems: 'flex-start'
-        }}>
+        <div className="responsive-grid-client-dash">
           
           {/* ========================================================= */}
           {/* CLIENT SIDEBAR */}
           {/* ========================================================= */}
-          <aside style={{
+          <aside className="responsive-sticky-sidebar" style={{
             backgroundColor: 'var(--bg-card)',
             border: '1px solid var(--border-subtle)',
             borderRadius: 'var(--radius-md)',
@@ -412,9 +407,7 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({ onNavigate }) 
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
-            boxShadow: 'var(--shadow-xs)',
-            position: 'sticky',
-            top: '80px'
+            boxShadow: 'var(--shadow-xs)'
           }}>
             
             {/* 1. Dashboard Overview Main Button */}

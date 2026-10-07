@@ -488,14 +488,8 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
 
         {/* Main Chat App Window */}
         <div 
-          className="card" 
+          className="card chatroom-main-grid" 
           style={{ 
-            height: 'calc(100vh - 175px)', 
-            minHeight: '620px',
-            maxHeight: '860px',
-            display: 'grid', 
-            gridTemplateColumns: '350px 1fr', 
-            overflow: 'hidden',
             backgroundColor: 'var(--bg-card)',
             border: '1.5px solid var(--border-medium)',
             borderRadius: 'var(--radius-lg)',

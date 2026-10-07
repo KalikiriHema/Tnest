@@ -309,9 +309,9 @@ export const ClientProfileView: React.FC<ClientProfileViewProps> = ({ clientId, 
           </div>
 
           {/* Profile Identity Row */}
-          <div style={{ padding: '0 32px 28px', position: 'relative' }}>
+          <div className="profile-identity-header" style={{ padding: '0 32px 28px', position: 'relative' }}>
             
-            <div style={{
+            <div className="profile-identity-row" style={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'flex-end',
@@ -457,7 +457,7 @@ export const ClientProfileView: React.FC<ClientProfileViewProps> = ({ clientId, 
         </div>
 
         {/* 4 SUMMARY STAT CARDS */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+        <div className="responsive-4col" style={{ marginBottom: '24px' }}>
           
           <div className="card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-subtle)' }}>
             <div style={{ width: '46px', height: '46px', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--accent-subtle)', border: '1px solid var(--accent-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)', flexShrink: 0 }}>
@@ -506,19 +506,17 @@ export const ClientProfileView: React.FC<ClientProfileViewProps> = ({ clientId, 
         </div>
 
         {/* 2-COLUMN MAIN CONTENT AREA */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '24px', alignItems: 'flex-start' }}>
+        <div className="responsive-grid-sidebar-wide">
           
           {/* LEFT: TABS & SECTIONS */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             
             {/* TAB SELECTOR */}
-            <div style={{
-              display: 'flex',
+            <div className="scrollable-tabs-bar" style={{
               backgroundColor: 'var(--bg-secondary)',
-              padding: '6px',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--border-subtle)',
-              gap: '6px'
+              padding: '6px'
             }}>
               <button
                 type="button"

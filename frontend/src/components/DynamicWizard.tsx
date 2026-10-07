@@ -429,7 +429,7 @@ export const DynamicWizard: React.FC<DynamicWizardProps> = ({ onRequirementCreat
       </div>
 
       {/* 4-Step Visual Flow Progress Bar */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '32px' }}>
+      <div className="responsive-4col" style={{ marginBottom: '32px' }}>
         {[
           { num: 1, label: '1. Type & Roles' },
           { num: 2, label: '2. Scope & Skills' },
@@ -499,7 +499,7 @@ export const DynamicWizard: React.FC<DynamicWizardProps> = ({ onRequirementCreat
             <label style={{ fontSize: '0.88rem', fontWeight: 700, display: 'block', marginBottom: '8px', color: 'var(--text-primary)' }}>
               1. What type of opportunity is this?
             </label>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+            <div className="responsive-3col" style={{ gap: '12px' }}>
               {[
                 { type: 'Task' as const, label: 'Task / Gig', desc: 'Short-term deliverable with clear scope' },
                 { type: 'Freelance' as const, label: 'Freelance Project', desc: 'Milestone-based contract or recurring work' },
@@ -773,7 +773,7 @@ export const DynamicWizard: React.FC<DynamicWizardProps> = ({ onRequirementCreat
             <label style={{ fontSize: '0.86rem', fontWeight: 700, display: 'block', marginBottom: '8px', color: 'var(--text-primary)' }}>
               Required Experience Level
             </label>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+            <div className="responsive-3col" style={{ gap: '10px' }}>
               {['Entry Level', 'Intermediate', 'Expert / Senior'].map((lvl) => {
                 const isSelected = experienceLevel === lvl;
                 return (
@@ -891,7 +891,7 @@ export const DynamicWizard: React.FC<DynamicWizardProps> = ({ onRequirementCreat
             <label style={{ fontSize: '0.86rem', fontWeight: 700, display: 'block', marginBottom: '8px', color: 'var(--text-primary)' }}>
               1. Compensation Type
             </label>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+            <div className="responsive-3col" style={{ gap: '10px' }}>
               {[
                 { type: 'Fixed' as const, label: 'Fixed Project Budget (₹)' },
                 { type: 'Hourly' as const, label: 'Hourly Rate (₹/hr)' },
